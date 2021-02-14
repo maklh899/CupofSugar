@@ -1,5 +1,4 @@
 # CupofSugar
----
 *Mobile application designed to compact apartment living essentials into one place and give users the ability to communicate with neighbors within their complex. Management will have a user friendly interface to easily oversee their residents.*
 
 ## Getting Started
@@ -17,9 +16,9 @@
 - MongoDB Atlas
 
 ### To run a local instance of the database and API:
-- Change directory to HappyHousePlants repository
+- Change directory to CupofSugar repository
 
-`cd HappyHousePlants`
+`cd CupofSugar`
 
 - Run the commands
 
