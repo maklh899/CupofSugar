@@ -1,33 +1,51 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-// import { Provider } from 'react-redux';
-// import { createStore, applyMiddleware, compose } from 'redux';
-// import thunk from 'redux-thunk';
+import { Provider } from 'react-redux';
+import { StyleSheet, StatusBar } from 'react-native';
+import { Container } from 'native-base';
+import configureStore from './redux/helpers/store';
+import { initializeApplication } from './redux/actions/appActions';
 
-// import { reducers } from './reducers';
+// import Navigation from './components/Navigation';
+import Navigation from './routing';
+import userBottomNavi from './components/userBottomNavi';
+// import { PrivateRoute } from './components/privateRouteComp';
 
 // const store = createStore(reducers, compose(applyMiddleware(thunk)));
+const store = configureStore();
+store.dispatch(initializeApplication());
 
-export default function App() {
-    return (
-        //<Provider store={store}>
-        <View style={styles.container}>
-            <Text>CupofSugar!</Text>
-            <Text>hiii!</Text>
-            <StatusBar style="auto"/>
-        </View>
-        //</Provider>
-    );
+function App() {
+  return (
+    <Provider store={store}>
+      <Container>
+        <Navigation />
+        <StatusBar style="auto"/>
+        {/* <Router>
+                <NavBar />
+                <Route path="/signup" exact>
+                    <SignUp />
+                </Route>
+                <Route path="/" exact>
+                    <SignIn />
+                </Route>
+                <PrivateRoute path="/home" component={Home} />
+            </Router> */}
+      </Container>
+    </Provider>
+  );
 }
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-});
+export default App;
+// function App() {
+//     return (
+//         // <Provider store={store}>
+//         <View style={styles.container}>
+//             <Text>CupofSugar!</Text>
+//             <Text>hiii!</Text>
+//             <StatusBar style="auto"/>
+//         </View>
+//         // </Provider>
+//     );
+// }
 
-//export default App;
+// export default App;
