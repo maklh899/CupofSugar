@@ -7,7 +7,9 @@ import { initializeApplication } from './redux/actions/appActions';
 
 // import Navigation from './components/Navigation';
 import Navigation from './routing';
-import userBottomNavi from './components/userBottomNavi';
+import UserBottomNavi from './components/UserBottomNavi';
+import { NavigationContainer } from '@react-navigation/native';
+
 // import { PrivateRoute } from './components/privateRouteComp';
 
 // const store = createStore(reducers, compose(applyMiddleware(thunk)));
@@ -20,16 +22,6 @@ function App() {
       <Container>
         <Navigation />
         <StatusBar style="auto"/>
-        {/* <Router>
-                <NavBar />
-                <Route path="/signup" exact>
-                    <SignUp />
-                </Route>
-                <Route path="/" exact>
-                    <SignIn />
-                </Route>
-                <PrivateRoute path="/home" component={Home} />
-            </Router> */}
       </Container>
     </Provider>
   );

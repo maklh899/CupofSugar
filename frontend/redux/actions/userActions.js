@@ -58,6 +58,7 @@ export const signIn = (payload) => function signin(dispatch) {
   console.log('userActions SignIn payload:', payload);
   console.log(`URL: ${SERVER_ADDR}/users/signIn`);
   dispatch(signInRequest);
+  console.log('about to fetch');
   // axios.post(`${SERVER_ADDR}/users/signIn`, payload)
   // axios.get(`${SERVER_ADDR}/users/findAll`)
   fetch(
@@ -65,22 +66,21 @@ export const signIn = (payload) => function signin(dispatch) {
     //   method: 'GET',
     `${SERVER_ADDR}/users/signIn`, {
       method: 'POST',
-    //   body: payload,
-    // data: payload,
-    // url: `${SERVER_ADDR}/users/signIn`,
-    // headers: {
-    //   Accept: 'application/json',
-    //   'Content-Type': 'application/json',
-    // },
-    // body: JSON.stringify({
-    //   userName: payload.userName,
-    //   password: payload.password,
-    // }),
+      // data: payload,
+
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        userName: payload.userName,
+        password: payload.password,
+      }),
     },
   )
     // .then((response) => response.json())
     .then((response) => {
-      console.log(response.json());
+      console.log('response');
       if (response.status < 300) {
         response.json().then((responseJSON) => {
           console.log('SignIn action: responseJSON', responseJSON);

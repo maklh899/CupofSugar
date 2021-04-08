@@ -3,7 +3,7 @@ const { Users } = require('./userModel');
 
 mongoose.pluralize(null);
 const bulletinSchema = new mongoose.Schema({
-  usUserser,
+  Users,
   message_body: String,
   message_status: { type: Boolean, default: false },
   created_at: { type: Date, default: Date.now },

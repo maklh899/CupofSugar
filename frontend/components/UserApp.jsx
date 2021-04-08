@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
 import { Button, View } from 'react-native';
 import {
   Container,
@@ -13,16 +14,16 @@ import {
   CardItem,
   Text,
 } from 'native-base';
-import userBottomNavi from './UserBottomNavi';
 import styles from './styles';
+import UserBottomNavi from './UserBottomNavi';
 
-function Home(obj) {
+function UserApp(obj) {
   const { navigation } = obj;
   return (
-    <View style={styles.container}>
-      <Text>You made it🥳</Text>
-      <Button title="Go to messages" onPress={() => { navigation.navigate('Messages'); }} />
-    </View>
+    <NavigationContainer>
+      <UserBottomNavi />
+    </NavigationContainer>
+
   );
 }
-export default Home;
+export default UserApp;

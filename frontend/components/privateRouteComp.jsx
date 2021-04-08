@@ -5,18 +5,18 @@ import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 
 export const PrivateRoute = ({
-    component,
-    path,
-    ...rest
+  component,
+  path,
+  ...rest
 }) => {
-    const { currentUser } = useSelector(
-        (state) => state.authentication,
-    );
-    return currentUser !== null ? (
-        <Route exact path={path} component={component} {...rest} />
-    ) : (
-        <Redirect to="/" />
-    );
+  const { currentUser } = useSelector(
+    (state) => state.authentication,
+  );
+  return currentUser !== null ? (
+    <Route exact path={path} component={component} {...rest} />
+  ) : (
+    <Redirect to="/" />
+  );
 };
 
 // PrivateRoute.propTypes = {

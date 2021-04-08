@@ -31,7 +31,7 @@ const userSchema = new mongoose.Schema({
   aptId: Array,
   // messaging info
   bulletinMessId: Array,
-  messages: [
+  messageRooms: [
     {
       chatId: String,
       name: String,

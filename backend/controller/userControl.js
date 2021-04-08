@@ -15,6 +15,7 @@ const signUp = async (req, res, next) => {
 };
 
 const signIn = async (req, res, next) => {
+  console.log(`SignIn req: ${req}`);
   try {
     const payload = req.body;
     console.log('userControl-signIn() payload:', payload);
@@ -26,6 +27,7 @@ const signIn = async (req, res, next) => {
   } catch (error) {
     console.log(error);
   }
+  console.log('SignIn done');
 };
 
 const findAll = async (req, res) => {
