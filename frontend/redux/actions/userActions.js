@@ -1,4 +1,5 @@
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { userConstants } from '../constants';
 
 const { SERVER_ADDR } = require('../../server');
@@ -43,9 +44,10 @@ const signInRequest = ({ name }) => ({
     name,
   },
 });
-const signInSuccess = (token) => ({
+const signInSuccess = (user, token) => ({
   type: userConstants.SIGN_IN_SUCCESS,
   payload: {
+    user,
     token,
   },
 });
@@ -60,7 +62,6 @@ export const signIn = (payload) => function signin(dispatch) {
   dispatch(signInRequest);
   console.log('about to fetch');
   // axios.post(`${SERVER_ADDR}/users/signIn`, payload)
-  // axios.get(`${SERVER_ADDR}/users/findAll`)
   fetch(
     // `${SERVER_ADDR}/users/findAll`, {
     //   method: 'GET',
@@ -83,14 +84,15 @@ export const signIn = (payload) => function signin(dispatch) {
       console.log('response');
       if (response.status < 300) {
         response.json().then((responseJSON) => {
-          console.log('SignIn action: responseJSON', responseJSON);
-          dispatch(signInSuccess(responseJSON));
+          console.log('SignIn action success: ', responseJSON);
+          AsyncStorage.setItem('authToken', responseJSON.token);
+          dispatch(signInSuccess(responseJSON.userName, responseJSON.token));
         });
       } else {
         response.json().then((responseJSON) => {
-          console.log('SignIn action: responseJSON', responseJSON);
+          console.log('SignIn action failure: ', responseJSON);
           // dispatch(isLoading(false));
-          dispatch(signInFailure(responseJSON.message));
+          dispatch(signInFailure(responseJSON.mess));
         });
       }
     })
@@ -104,7 +106,7 @@ export const signIn = (payload) => function signin(dispatch) {
         console.log('Message: ', error.message);
       }
       // dispatch(isLoading(false))
-      dispatch(signInFailure(error));
+      dispatch(signInFailure(error.message));
     });
   // .then((response) => {
   //     const { token } = response.data;
@@ -118,19 +120,19 @@ export const signIn = (payload) => function signin(dispatch) {
 };
 
 // sign out action creators
-export const signOutRequest = function signoutreq() {
+const signOutRequest = function signoutreq() {
   return {
     type: userConstants.SIGN_OUT_REQUEST,
   };
 };
 
-export const signOutSuccess = function signoutsucc() {
+const signOutSuccess = function signoutsucc() {
   return {
     type: userConstants.SIGN_OUT_SUCCESS,
   };
 };
 
-export const signOutFailure = function signoutfail() {
+const signOutFailure = function signoutfail() {
   return {
     type: userConstants.SIGN_OUT_FAILURE,
   };

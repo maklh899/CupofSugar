@@ -31,16 +31,7 @@ const userSchema = new mongoose.Schema({
   aptId: Array,
   // messaging info
   bulletinMessId: Array,
-  messageRooms: [
-    {
-      chatId: String,
-      name: String,
-      images: [{
-        date: Date,
-        base64: String,
-      }],
-    },
-  ],
+  messageRoomIDs: Array,
 
 },
 {

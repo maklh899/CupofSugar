@@ -4,9 +4,7 @@ const { Users } = require('./userModel');
 mongoose.pluralize(null);
 
 const chatroomSchema = new mongoose.Schema({
-  roomID: { type: String, index: true, unique: true },
-  name: { type: String, lowercase: true },
-  topic: String,
+  name: { type: String, required: true },
   members: Array,
   // messages: Array,
   messages: [
@@ -24,9 +22,9 @@ const chatroomSchema = new mongoose.Schema({
   timestamps: true,
 });
 
-const CHATROOMS = mongoose.model('Chatrooms', chatroomSchema);
+const Chatrooms = mongoose.model('Chatrooms', chatroomSchema);
 
-module.exports = { CHATROOMS };
+module.exports = Chatrooms;
 
 // messageSchema = new mongoose.Schema({
 //   room,

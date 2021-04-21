@@ -19,13 +19,22 @@ const signIn = async (req, res, next) => {
   try {
     const payload = req.body;
     console.log('userControl-signIn() payload:', payload);
-    const token = await signInUser(payload);
+    // const token = await signInUser(payload);
+    const response = await signInUser(payload);
+    //console.log(`SignIn response: ${response.user} and ${response.token}`);
+    res.header('x-auth-token', response.token);
     res.status(200).json({
       success: true,
-      token,
+      user: response.user,
+      token: response.token,
     });
+    // console.log('token:', token);
   } catch (error) {
-    console.log(error);
+    console.log('signIn error: ', error.message);
+    res.status(401).json({
+      success: false,
+      mess: error.message,
+    });
   }
   console.log('SignIn done');
 };

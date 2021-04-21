@@ -3,7 +3,9 @@ const { Users } = require('./userModel');
 
 mongoose.pluralize(null);
 const aptSchema = new mongoose.Schema({
-  AptNumber: { index: true },
+  AptNumber: { type: Number, index: { unique: true } },
+  rentDue: Number,
+  rentPaid: Number,
   tenants: Array,
   documents: [{
     name: String,
@@ -13,6 +15,6 @@ const aptSchema = new mongoose.Schema({
   created_at: { type: Date, default: Date.now },
 });
 
-const APT = mongoose.model('Apartments', aptSchema);
+const Apts = mongoose.model('Apartments', aptSchema);
 
-module.exports = { APT };
+module.exports = Apts;

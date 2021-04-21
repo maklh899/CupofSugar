@@ -7,13 +7,13 @@ const https = require('https');
 // configures our .env file
 require('dotenv').config();
 
-const privateKey = fs.readFileSync('/etc/letsencrypt/live/wakena6.onzasoft.com/privkey.pem', 'utf8');
-const certificate = fs.readFileSync('/etc/letsencrypt/live/wakena6.onzasoft.com/fullchain.pem', 'utf8');
+const privateKey = fs.readFileSync('/etc/letsencrypt/live/wakena.onzasoft.com/privkey.pem', 'utf8');
+const certificate = fs.readFileSync('/etc/letsencrypt/live/wakena.onzasoft.com/fullchain.pem', 'utf8');
 
 const credentials = { key: privateKey, cert: certificate };
 
 const app = express();
-const port = process.env.PORT || 8070;
+const port = 8070;
 
 app.use(cors()); // cors middleware
 app.use(express.json()); // allows us to parse json
@@ -26,10 +26,14 @@ const uri = process.env.ATLAS_URI;
 mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true });
 
 // const exercisesRouter = require('./routes/exercises');
-// const usersRouter = require('./routes/user_routes');
+
 const usersRouter = require('./routers/authRoute');
-// app.use('/exercises', exercisesRouter);
+const messRouter = require('./routers/messRoute');
+const aptRouter = require('./routers/aptRoute');
+
 app.use('/users', usersRouter);
+app.use('/chat', messRouter);
+app.use('/apt', aptRouter);
 
 // starts the server, and listens on a certain port
 httpServer.listen(8071, () => {
@@ -37,5 +41,5 @@ httpServer.listen(8071, () => {
 });
 
 httpsServer.listen(port, () => {
-  console.log(`Https Server is running on port: ${port}`);
+  console.log(`Https Server is running on port:  ${port}`);
 });

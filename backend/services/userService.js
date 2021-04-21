@@ -34,18 +34,22 @@ function signInUser(payload) {
     .exec()
     .then((user) => {
       if (!user) {
-        throw new Error('Please enter email or password');
+        throw new Error('Incorrect user name, try again');
       } else {
         return bcrypt
           .compare(payload.password, user.password)
           .then((res) => {
             if (res) {
               const token = getSignedToken(user._id);
-              return token;
+              return ({
+                user,
+                token,
+              });
             }
-            throw new Error('Incorrect password or email, try again');
+            throw new Error('Incorrect password, try again');
           })
           .catch((err) => {
+            console.log(err);
             throw new Error('All field required');
           });
       }
@@ -53,6 +57,7 @@ function signInUser(payload) {
 }
 
 async function getUsers(payload) {
+  console.log('getUsers Users: ', User);
   return User.find()
     .then((users) => {
       payload.json(users);

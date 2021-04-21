@@ -1,5 +1,3 @@
-// import userControl from '../controller/userControl';
-
 const router = require('express').Router();
 const userControl = require('../controller/userControl');
 // const router = express.Router();
