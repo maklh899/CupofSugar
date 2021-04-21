@@ -12,6 +12,8 @@ const initState = {
   // token: localStorage.getItem('USER-TOKEN')
   //     ? localStorage.getItem('USER-TOKEN')
   //     : null,
+  currentUser: null,
+  token: null,
   error: '',
   loading: false,
   isAuthenticated: false,
@@ -20,6 +22,10 @@ const initState = {
 const authenticationReducer = function authRed(state = initState, action) {
   switch (action.type) {
   case userConstants.SIGN_IN_REQUEST:
+    return {
+      ...state,
+      error: '',
+    };
   case userConstants.SIGN_UP_REQUEST:
   case userConstants.SIGN_OUT_REQUEST:
     return {
@@ -28,6 +34,10 @@ const authenticationReducer = function authRed(state = initState, action) {
       isAuthenticated: false,
     };
   case userConstants.SIGN_IN_FAILURE:
+    return {
+      ...state,
+      error: action.payload,
+    };
   case userConstants.SIGN_UP_FAILURE:
   case userConstants.SIGN_OUT_FAILURE:
     return {
@@ -39,17 +49,19 @@ const authenticationReducer = function authRed(state = initState, action) {
     };
   case userConstants.SIGN_UP_SUCCESS:
   case userConstants.SIGN_IN_SUCCESS: {
-    const { username = 'anon' } = action.payload;
+    // const { username = 'anon' } = action.payload;
     return {
+      ...state,
       loading: false,
-      // token: action.payload.token,
-      // currentUser: action.payload.user,
+      token: action.payload.token,
+      currentUser: action.payload.user,
       isAuthenticated: true,
-      username,
+      error:'',
+      // username,
     };
   }
   case userConstants.SIGN_OUT_SUCCESS:
-    localStorage.removeItem('USER-TOKEN');
+    //localStorage.removeItem('USER-TOKEN');
     return {
       ...state,
       isAuthenticated: false,

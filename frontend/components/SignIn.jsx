@@ -20,6 +20,7 @@ import { signIn } from '../redux/actions/userActions';
 const mapStateToProps = (state) => ({
   storedUserName: state.authentication.username,
   isUserLoggedIn: state.authentication.isAuthenticated,
+  error: state.authentication.error,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -27,7 +28,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const Signin = ({
-  login, navigation, storedUserName, isUserLoggedIn,
+  login, navigation, storedUserName, isUserLoggedIn, error,
 }) => {
   // const { error } = useSelector((state) => state.authentication);
   const [userName, setUserName] = useState('');
@@ -35,6 +36,7 @@ const Signin = ({
   const [password, setPassword] = useState('');
   const [status, setStatus] = useState('...');
   console.log(signIn);
+  console.log('error', error);
   useEffect(() => {
     setStatus(isUserLoggedIn
       ? `Successfully logged in as ${storedUserName}`
@@ -66,6 +68,7 @@ const Signin = ({
     login: PropTypes.func.isRequired,
     storedUserName: PropTypes.string,
     isUserLoggedIn: PropTypes.bool.isRequired,
+    error: PropTypes.string.isRequired,
     navigation: PropTypes.shape({
       navigate: PropTypes.func.isRequired,
     }).isRequired,
@@ -98,6 +101,12 @@ const Signin = ({
             title="login"
             onPress={() => login(userName, password)}
           />
+          { error !== ''
+          && (
+            <Text>
+              {error}
+            </Text>
+          )}
 
         </CardItem>
         <CardItem>
