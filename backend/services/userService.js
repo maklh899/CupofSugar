@@ -66,8 +66,45 @@ async function getUsers(payload) {
       throw new Error(err);
     });
 }
+
+async function findUserByID(payload) {
+  console.log('findUserByID Users:', payload);
+  return User.findOne({ '_id': payload })
+
+    .exec()
+    .then((userInfo) => userInfo)
+    .catch((err) => {
+      console.error('userServ - findUserByID: Cannot find user', err);
+      throw new Error('Cannot find user - ', payload);
+    });
+}
+
+async function findUserByUsername(payload) {
+  console.log('findUserByID Users:', payload);
+  return User.findOne({ userName: payload })
+    .exec()
+    .then((userInfo) => userInfo)
+    .catch((err) => {
+      console.error('userServ - findUserByUsername: Cannot find user', err);
+      throw new Error('Cannot find user - ', payload);
+    });
+}
+
+async function updateUserDoc(userId, payload) {
+  console.log('updateUserDoc userId:', userId);
+  console.log('updateUserDoc payload:', payload);
+  return User.updateOne({ '_id': userId }, payload)
+    .exec();
+}
 // const userServices = {
 //     createUser,
 //     signInUser,
 // };
-module.exports = { createUser, signInUser, getUsers };
+module.exports = {
+  createUser,
+  signInUser,
+  getUsers,
+  findUserByID,
+  findUserByUsername,
+  updateUserDoc,
+};

@@ -28,10 +28,13 @@ const userSchema = new mongoose.Schema({
     minlength: 6,
   }, // Salted+Hashed
   admin: Boolean,
-  aptId: Array,
+  aptId: Number,
   // messaging info
   bulletinMessId: Array,
-  messageRoomIDs: Array,
+  messageRooms: [{
+    roomID: String,
+    roomName: String,
+  }],
 
 },
 {

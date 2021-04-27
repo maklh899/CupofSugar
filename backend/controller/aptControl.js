@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const key = require('../keys');
 
 const { createApt } = require('../services/aptService');
+const { findUserByUsername, updateUserDoc } = require('../services/userService');
 
 const createNewApt = async (req, res) => {
   try {
@@ -10,13 +11,18 @@ const createNewApt = async (req, res) => {
     const token = req.headers['x-auth-token'];
     const verToken = jwt.verify(token, key.JWT_SECRET);
 
-    // const { rent, memberUsernames } = req.body;
-
     if (verToken) {
       console.log('createNewApt token verified: ', verToken);
 
       const apt = await createApt(req.body);
       console.log('createNewApt response: ', apt);
+
+      // NEED TO UPDATE APTID FOR USER DOCUMENT
+      for (let i = 0; i < req.body.members.length; i += 1) {
+        const currUser = await findUserByUsername(req.body.members[i]);
+        const userDoc = await updateUserDoc(currUser['_id'], { aptId: apt.AptNumber });
+      }
+      //console.log('createNewApt userDoc: ', userDoc);
 
       res.status(200).send();
     }

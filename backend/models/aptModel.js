@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose').set('debug', true);
 const { Users } = require('./userModel');
 
 mongoose.pluralize(null);

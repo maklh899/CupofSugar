@@ -15,11 +15,13 @@ async function getAllRooms(payload) {
     });
 }
 
+// need to also to user model
 async function createChatroom(payload) {
   console.log('createChatroom() service payload:', payload);
+
   const newChatroom = new Rooms({
     name: payload.roomName,
-    members: payload.usernamesArr,
+    members: payload.usernames,
   });
   return newChatroom.save();
 }

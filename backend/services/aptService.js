@@ -2,13 +2,13 @@ const Apt = require('../models/aptModel');
 
 // get apartment tenants by username
 async function getAptTenants(payload) {
-  console.log('getAptTenants() payload:', payload);
-  console.log('getAptTenants() Apt:', Apt);
+  console.log('aptService-getAptTenants payload:', payload);
+  // console.log('Service- getAptTenants:', Apt);
   return Apt.findOne({ AptNumber: payload })
     .exec()
     .then((apt) => {
       if (!apt) {
-        throw new Error('Apartment does not exist');
+        throw new Error(`Apartment ${payload} does not exist`);
       } else {
         return apt.tenants;
       }
@@ -16,6 +16,7 @@ async function getAptTenants(payload) {
 }
 
 // create new Apartment
+
 async function createApt(payload) {
   console.log('createApt() payload:', payload);
   const stats = await Apt.find();
