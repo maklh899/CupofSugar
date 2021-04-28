@@ -1,17 +1,16 @@
 const mongoose = require('mongoose');
-const { Users } = require('./userModel');
+const { User } = require('./userModel');
 
 mongoose.pluralize(null);
 
 const chatroomSchema = new mongoose.Schema({
   name: { type: String, required: true },
-  members: Array,
-  // messages: Array,
+  members: { type: Array, required: true },
+
   messages: [
     {
       sender: String,
       message_body: String,
-      message_status: { type: Boolean, default: false },
       created_at: { type: Date, default: Date.now },
     },
   ],
@@ -19,7 +18,7 @@ const chatroomSchema = new mongoose.Schema({
   updated_at: { type: Date, default: Date.now },
 },
 {
-  timestamps: true,
+  timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' },
 });
 
 const Chatrooms = mongoose.model('Chatrooms', chatroomSchema);

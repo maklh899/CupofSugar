@@ -9,6 +9,6 @@ const bulletinSchema = new mongoose.Schema({
   created_at: { type: Date, default: Date.now },
 });
 
-const BULLETIN = mongoose.model('Bulletin', bulletinSchema);
+const Bulletin = mongoose.model('Bulletin', bulletinSchema);
 
-module.exports = { BULLETIN };
+module.exports = { Bulletin };

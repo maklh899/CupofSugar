@@ -24,11 +24,16 @@ const createNewApt = async (req, res) => {
       }
       //console.log('createNewApt userDoc: ', userDoc);
 
-      res.status(200).send();
+      res.status(200).json({
+        success: true,
+      });
     }
   } catch (error) {
     console.log('createNewApt error: ', error.message);
-    res.status(500).send();
+    res.status(500).json({
+      success: false,
+      mess: error.message,
+    });
   }
 };
 

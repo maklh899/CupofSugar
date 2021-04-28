@@ -50,7 +50,7 @@ function signInUser(payload) {
           })
           .catch((err) => {
             console.log(err);
-            throw new Error('All field required');
+            throw new Error('Incorrect password, try again');
           });
       }
     });

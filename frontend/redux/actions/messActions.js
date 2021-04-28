@@ -18,23 +18,28 @@ const getChatroomsFailure = (error) => ({
   payload: error,
 });
 
-export const getChatrooms = (payload) => function getchatrooms(dispatch) {
+export const getChatrooms = () => function getchatrooms(dispatch) {
+  //console.log('getChatrooms authFetch: ', authFetch('/chat/getUserRooms'));
   console.log(`URL: ${SERVER_ADDR}/chat/getUserRooms`);
   dispatch(getChatroomsRequest);
   // getChatRooms(userToken)
   authFetch('/chat/getUserRooms')
     .then((response) => {
       console.log('getUserRooms response: ', response);
-      if (response.status < 300) {
-        response.json().then((responseJSON) => {
-          console.log('getChatrooms action success: ', responseJSON);
-          dispatch(getChatroomsSuccess(responseJSON.chatRooms));
-        });
+      if (response.success) {
+        console.log('getChatrooms action success: ', response.chatRooms);
+        dispatch(getChatroomsSuccess(response.chatRooms));
+        // response.json().then((responseJSON) => {
+        //   console.log('getChatrooms action success: ', responseJSON.chatRooms);
+        //   dispatch(getChatroomsSuccess(responseJSON.chatRooms));
+        // });
       } else {
-        response.json().then((responseJSON) => {
-          console.log('getChatrooms action failure: ', responseJSON);
-          dispatch(getChatroomsFailure(responseJSON));
-        });
+        console.log('getChatrooms action failure: ', response);
+        dispatch(getChatroomsFailure(response));
+        // response.json().then((responseJSON) => {
+        //   console.log('getChatrooms action failure: ', responseJSON);
+        //   dispatch(getChatroomsFailure(responseJSON));
+        // });
       }
     });
 };

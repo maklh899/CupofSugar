@@ -10,7 +10,10 @@ const signUp = async (req, res, next) => {
       data: savedUser,
     });
   } catch (error) {
-    console.log(error);
+    res.status(500).json({
+      success: false,
+      mess: error.message,
+    });
   }
 };
 

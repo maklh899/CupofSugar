@@ -1,16 +1,17 @@
 const mongoose = require('mongoose');
-const { room } = require('./chatroomModel');
-const { Users } = require('./userModel');
+const { roomId } = require('./chatroomModel');
+const { User } = require('./userModel');
 
 mongoose.pluralize(null);
 const messageSchema = new mongoose.Schema({
   room,
-  sender: Users,
+  sender: User,
   message_body: String,
-  message_status: { type: Boolean, default: false},
   created_at: { type: Date, default: Date.now },
 });
 
 const MESSAGES = mongoose.model('Messages', messageSchema);
 
 module.exports = { MESSAGES };
+
+// later on would separate  messages and chat rooms into separate models

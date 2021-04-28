@@ -10,12 +10,11 @@ async function getAllRooms(payload) {
       if (!user) {
         throw new Error('User does not exist');
       } else {
-        return user.messageRoomIDs;
+        return user.messageRooms;
       }
     });
 }
 
-// need to also to user model
 async function createChatroom(payload) {
   console.log('createChatroom() service payload:', payload);
 
@@ -26,4 +25,41 @@ async function createChatroom(payload) {
   return newChatroom.save();
 }
 
-module.exports = { getAllRooms, createChatroom };
+async function getChatroombyId(payload) {
+  console.log('getChatroombyId() messService payload:', payload);
+  return Rooms.findOne({ '_id': payload })
+    .exec()
+    .then((room) => {
+      if (!room) {
+        console.log('getChatroombyId() !room:', room);
+        throw new Error('Chatroom does not exist');
+      } else {
+        return room;
+      }
+    })
+    .catch((error) => {
+      console.log('getChatroombyId() error:', error.message);
+      throw new Error(error.message);
+    });
+}
+
+async function createMessage(username, payload) {
+  console.log('createMessage() messService username:', username);
+  console.log('createMessage() messService payload:', payload);
+  const chatroom = await getChatroombyId(payload.roomId);
+  console.log('createMessage() chatroom:', chatroom);
+  chatroom.messages.push({ sender: username, message_body: payload.message });
+  return Rooms.updateOne({ '_id': payload.roomId }, chatroom)
+    .exec()
+    .catch((error) => {
+      console.log('createMessage() error:', error.message);
+      throw new Error(error.message);
+    });
+}
+
+module.exports = {
+  getAllRooms,
+  createChatroom,
+  getChatroombyId,
+  createMessage,
+};
