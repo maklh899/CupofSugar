@@ -19,7 +19,7 @@ import {
 import styles from './styles';
 import ChartroomsList from './ChatroomList';
 
-function RecommendScreen(obj) {
+function ChatroomsScreen(obj) {
   const { navigation } = obj;
   return (
     <Container style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -33,4 +33,4 @@ function RecommendScreen(obj) {
     </Container>
   );
 }
-export default RecommendScreen;
+export default ChatroomsScreen;

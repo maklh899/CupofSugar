@@ -2,10 +2,10 @@ import React from 'react';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import SignInScreen from '../components/SignIn';
-import SignUpScreen from '../components/SignUp';
-import HomeScreen from '../components/Home';
-import MessagesScreen from '../components/MessagesScreen';
+import SignInScreen from '../components/SignInScreen';
+import SignUpScreen from '../components/SignUpScreen';
+import HomeScreen from '../components/HomeScreen';
+import MessagesScreen from '../components/ChatroomsScreen';
 import AppLoadingScreen from '../components/appLoadingScreen';
 import UserApp from '../components/UserApp';
 
@@ -18,7 +18,6 @@ const AuthStack = createStackNavigator(
     initialRouteParams: 'Login',
   },
 );
-
 
 const AppStack = createStackNavigator(
   {

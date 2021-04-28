@@ -5,8 +5,8 @@ import { Container } from 'native-base';
 import configureStore from './redux/helpers/store';
 import { initializeApplication } from './redux/actions/appActions';
 
-// import Navigation from './components/Navigation';
-import Navigation from './routing';
+import Navigation from './components/Navigation';
+//import Navigation from './routing';
 import UserBottomNavi from './components/UserBottomNavi';
 import { NavigationContainer } from '@react-navigation/native';
 

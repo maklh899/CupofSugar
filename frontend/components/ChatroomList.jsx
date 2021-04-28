@@ -46,25 +46,15 @@ class ChatroomList extends Component {
   // }
 
   componentDidMount() {
-    //const RoomThis = this; // pointer to the component
     console.log('message screen - fetching /chat/getUserRooms');
-    //const {chatRooms } = this.props;
-    // authFetch('/chat/getUserRooms')
-    //   .then((data) => {
-    //     listThis.setState({
-    //       loaded: true,
-    //       chatroomsList: data,
-    //       error: null,
-    //   });
 
     this.props.getChatrooms();
-    //this.props.chatRooms = chatRoomsList;
-    //getChatrooms();
   }
 
   render() {
-    const { chatRooms } = this.state;
-    const chatRoomsList = chatRooms.map((roomsID) => (<FloatingTip key={roomsID} roomsID={roomsID} />));
+    const { chatRooms } = this.props;
+    console.log('Chatroom List chatRooms: ', chatRooms);
+    const chatRoomsList = chatRooms.map((chatroom) => (<Card key={chatroom['_id']} roomsID={chatroom['_id']} />));
     return (
       <Container style={styles.container}>
         <Text>You made it🥳</Text>
@@ -77,9 +67,8 @@ class ChatroomList extends Component {
 }
 
 ChatroomList.propTypes = {
+  chatRooms: PropTypes.arrayOf(PropTypes.object).isRequired,
   getChatrooms: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChatroomList);
-// chatRooms: PropTypes.arr.isRequired,
-//   isLoading: PropTypes.bool.isRequired,
