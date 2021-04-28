@@ -3,8 +3,8 @@ const chatRoom = require('../controller/messConrol');
 
 router.get('/getUserRooms', chatRoom.getUserRooms);
 router.post('/createChatRoom', chatRoom.createChatRoom);
-router.post('/postMessage', chatRoom.postMessage);
-router.get('/getAllRoomMess', chatRoom.getAllRoomMess);
+router.post('/:roomId/postMessage', chatRoom.postMessage);
+router.get('/:roomId/getAllRoomMess', chatRoom.getAllRoomMess);
 // router.get('/', chatRoom.getRecentConversation);
 // router.get('/:roomId', chatRoom.getConversationByRoomId);
 // router.post('/initiate', chatRoom.initiate);

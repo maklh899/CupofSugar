@@ -60,7 +60,7 @@ export const signIn = (payload) => function signin(dispatch) {
   console.log('userActions SignIn payload:', payload);
   console.log(`URL: ${SERVER_ADDR}/users/signIn`);
   dispatch(signInRequest);
-  console.log('about to fetch');
+
   // axios.post(`${SERVER_ADDR}/users/signIn`, payload)
   fetch(
     // `${SERVER_ADDR}/users/findAll`, {
@@ -86,7 +86,7 @@ export const signIn = (payload) => function signin(dispatch) {
         response.json().then((responseJSON) => {
           console.log('SignIn action success: ', responseJSON);
           AsyncStorage.setItem('authToken', responseJSON.token);
-          dispatch(signInSuccess(responseJSON.userName, responseJSON.token));
+          dispatch(signInSuccess(responseJSON.user, responseJSON.token));
         });
       } else {
         response.json().then((responseJSON) => {

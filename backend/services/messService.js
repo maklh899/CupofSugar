@@ -1,10 +1,10 @@
 const User = require('../models/userModel');
 const Rooms = require('../models/chatroomModel');
 
-// returns chatrooms of the user
-async function getAllRooms(payload) {
-  console.log('getAllRooms() payload:', payload);
-  return User.findOne({ '_id': payload })
+// returns chatrooms of a user
+async function getAllUserRooms(userId) {
+  console.log('getAllUserRooms() userId:', userId);
+  return User.findOne({ '_id': userId })
     .exec()
     .then((user) => {
       if (!user) {
@@ -43,13 +43,13 @@ async function getChatroombyId(payload) {
     });
 }
 
-async function createMessage(username, payload) {
+async function createMessage(username, roomId, payload) {
   console.log('createMessage() messService username:', username);
   console.log('createMessage() messService payload:', payload);
-  const chatroom = await getChatroombyId(payload.roomId);
+  const chatroom = await getChatroombyId(roomId);
   console.log('createMessage() chatroom:', chatroom);
   chatroom.messages.push({ sender: username, message_body: payload.message });
-  return Rooms.updateOne({ '_id': payload.roomId }, chatroom)
+  return Rooms.updateOne({ '_id': roomId }, chatroom)
     .exec()
     .catch((error) => {
       console.log('createMessage() error:', error.message);
@@ -58,7 +58,7 @@ async function createMessage(username, payload) {
 }
 
 module.exports = {
-  getAllRooms,
+  getAllUserRooms,
   createChatroom,
   getChatroombyId,
   createMessage,

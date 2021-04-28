@@ -56,7 +56,7 @@ const authenticationReducer = function authRed(state = initState, action) {
       token: action.payload.token,
       currentUser: action.payload.user,
       isAuthenticated: true,
-      error:'',
+      error: '',
       // username,
     };
   }
@@ -67,6 +67,7 @@ const authenticationReducer = function authRed(state = initState, action) {
       isAuthenticated: false,
       loading: false,
       currentUser: null,
+      error: '',
       token: '',
     };
   default:

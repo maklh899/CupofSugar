@@ -4,7 +4,7 @@ const key = require('../keys');
 
 const { findUserByID, findUserByUsername, updateUserDoc } = require('../services/userService');
 const {
-  getAllRooms,
+  getAllUserRooms,
   createChatroom,
   createMessage,
   getChatroombyId,
@@ -18,9 +18,8 @@ const getUserRooms = async (req, res) => {
     const verToken = jwt.verify(token, key.JWT_SECRET);
     if (verToken) {
       console.log('getUserRooms token verified: ', verToken);
-      const currUser = req.body;
-      console.log(currUser);
-      const chatRooms = await getAllRooms(verToken['_id']);
+
+      const chatRooms = await getAllUserRooms(verToken['_id']);
       // console.log('getUserRooms chatRooms response: ', chatRooms);
       res.status(200).json({
         success: true,
@@ -36,6 +35,8 @@ const getUserRooms = async (req, res) => {
   }
 };
 
+// params: aptIds, usernames
+// user has a choice of chatting by apt or by individual users
 const createChatRoom = async (req, res) => {
   try {
     console.log('---createChatRoom messControl---');
@@ -103,6 +104,7 @@ const createChatRoom = async (req, res) => {
   }
 };
 
+// params: message
 const postMessage = async (req, res) => {
   try {
     console.log('---postMessage messControl---');
@@ -111,9 +113,8 @@ const postMessage = async (req, res) => {
     const verToken = jwt.verify(token, key.JWT_SECRET);
 
     const currUser = await findUserByID(verToken['_id']);
-
-    const messBody = await createMessage(currUser.userName, req.body);
-    //console.log('postMessage messbody: ', messBody);
+    const { roomId } = req.params;
+    const messBody = await createMessage(currUser.userName, roomId, req.body);
 
     res.status(200).json({
       success: true,
@@ -127,6 +128,7 @@ const postMessage = async (req, res) => {
   }
 };
 
+// params: none
 const getAllRoomMess = async (req, res) => {
   try {
     console.log('---getAllRoomMess messControl---');
@@ -134,7 +136,9 @@ const getAllRoomMess = async (req, res) => {
     const token = req.headers['x-auth-token'];
     const verToken = jwt.verify(token, key.JWT_SECRET);
 
-    const chatroom = await getChatroombyId(req.body.roomId);
+    const { roomId } = req.params;
+
+    const chatroom = await getChatroombyId(roomId);
     console.log('getAllRoomMess chatroom.messages: ', chatroom.messages);
 
     res.status(200).json({

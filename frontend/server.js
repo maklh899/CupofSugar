@@ -27,6 +27,7 @@ function authFetch(path, method = 'GET', body) {
           .then((resRaw) => {
             if (resRaw.ok) {
               resRaw.json().then((res) => {
+                console.log('authFetch res: ', res);
                 response(res);
               })
                 .catch((reason) => {
