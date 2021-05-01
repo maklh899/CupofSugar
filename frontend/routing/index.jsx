@@ -6,7 +6,7 @@ import SignInScreen from '../components/SignInScreen';
 import SignUpScreen from '../components/SignUpScreen';
 import HomeScreen from '../components/HomeScreen';
 import MessagesScreen from '../components/ChatroomsScreen';
-import AppLoadingScreen from '../components/appLoadingScreen';
+import SplashScreen from '../components/SplashScreen';
 import UserApp from '../components/UserApp';
 
 const AuthStack = createStackNavigator(
@@ -35,7 +35,7 @@ const AppStack = createStackNavigator(
 const AppNavigator = createAppContainer(
   createSwitchNavigator(
     {
-      AppLoading: AppLoadingScreen,
+      AppLoading: SplashScreen,
       Auth: AuthStack,
       App: AppStack,
     },

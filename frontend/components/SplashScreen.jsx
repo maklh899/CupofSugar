@@ -5,16 +5,18 @@ import { connect } from 'react-redux';
 import styles from './styles';
 
 const handleClick = (isUserLoggedIn, navigation) => (
-  isUserLoggedIn
-    ? navigation.navigate('Home')
-    : navigation.navigate('Login') // Login
+  // isUserLoggedIn
+  //   ? navigation.navigate('Home')
+  //   : navigation.navigate('Login') // Login
+  navigation.replace(
+    isUserLoggedIn ? 'BottomNaviRoutes' : 'Auth',
+  )
 );
 
 const AppLoadingScreen = ({ navigation, isUserLoggedIn, ...props }) => (
   <TouchableWithoutFeedback onPress={() => handleClick(isUserLoggedIn, navigation)}>
     <View style={styles.page}>
       <Text>Touch Screen to start!</Text>
-      <Text>status: {isUserLoggedIn}</Text>
     </View>
   </TouchableWithoutFeedback>
 );

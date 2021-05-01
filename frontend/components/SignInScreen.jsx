@@ -43,7 +43,8 @@ const Signin = ({
       : 'Not Logged In');
     if (isUserLoggedIn) {
       setTimeout(() => {
-        navigation.navigate('App');
+        // navigation.navigate('App');
+        navigation.replace('BottomNaviRoutes');
       }, 3000);
     }
   }, [isUserLoggedIn, storedUserName]);
@@ -76,7 +77,7 @@ const Signin = ({
 
   // onChangeText={(text) => { handleUsernameChange(text); console.log('input:', text); }}
   return (
-    <Container style={styles.container}>
+    <Container style={styles.screenContainer}>
       <Card style={styles.card}>
         <CardItem>
           <Item stackedLabel>
@@ -113,7 +114,7 @@ const Signin = ({
           <Button
             title="Don't have an account?"
             transparent
-            onPress={() => navigation.navigate('Sign Up')}
+            onPress={() => navigation.navigate('Register')}
           />
         </CardItem>
         <Text>{status}</Text>
@@ -125,28 +126,3 @@ const Signin = ({
 
 export default connect(mapStateToProps, mapDispatchToProps)(Signin);
 // export default connect(mapStateToProps)(Signin);
-{/* <div className="mycard">
-            <div className="card auth-card input-field">
-                <input
-                    type="text"
-                    placeholder="email"
-                    value={email}
-                    onChange={handleEmailChange}
-                />
-                <input
-                    type="password"
-                    placeholder="password"
-                    value={password}
-                    onChange={handlePasswordChange}
-                />
-                {error !== null ? <div className="error">{error}</div> : null}
-                <button
-                    type="button"
-                    className="btn waves-effect waves-light #42a5f5 blue lighten-1"
-                    onClick={handleSignInClick}
-                >
-                    Login
-                </button>
-                <Link to="/signup"> Don't have an account?</Link>
-            </div>
-        </div> */}
