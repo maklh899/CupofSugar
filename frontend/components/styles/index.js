@@ -3,10 +3,12 @@ import {
 } from 'react-native';
 
 const styles = StyleSheet.create({
-  container: {
+  screenContainer: {
     alignItems: 'center',
     flex: 1,
-    // justifyContent: 'center',
+  },
+  listContainer: {
+    padding: '5%',
   },
   card: {
     marginTop: 30,

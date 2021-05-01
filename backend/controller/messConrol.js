@@ -20,10 +20,22 @@ const getUserRooms = async (req, res) => {
       console.log('getUserRooms token verified: ', verToken);
 
       const chatRooms = await getAllUserRooms(verToken['_id']);
+      const chatRoomswTime = Array(chatRooms.length);
       // console.log('getUserRooms chatRooms response: ', chatRooms);
+
+      for (let i = 0; i < chatRooms.length; i += 1) {
+        const roomInfo = await getChatroombyId(chatRooms[i]['roomID']);;
+
+        chatRoomswTime[i] = {
+          roomID: chatRooms[i]['roomID'],
+          roomName: chatRooms[i]['roomName'],
+          updated_at: roomInfo['updated_at'],
+        };
+        //console.log('getUserRooms updated chatRoomswTime: ', chatRoomswTime[i]);
+      }
       res.status(200).json({
         success: true,
-        chatRooms,
+        chatRoomswTime,
       });
     }
   } catch (error) {

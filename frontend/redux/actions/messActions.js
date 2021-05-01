@@ -7,10 +7,10 @@ const { SERVER_ADDR, authFetch } = require('../../server');
 const getChatroomsRequest = () => ({
   type: messConstants.ALL_CHATROOMS_REQUEST,
 });
-const getChatroomsSuccess = (chatRooms) => ({
+const getChatroomsSuccess = (chatRoomswTime) => ({
   type: messConstants.ALL_CHATROOMS_SUCCESS,
   payload: {
-    chatRooms,
+    chatRooms: chatRoomswTime,
   },
 });
 const getChatroomsFailure = (error) => ({
@@ -27,8 +27,8 @@ export const getChatrooms = () => function getchatrooms(dispatch) {
     .then((response) => {
       console.log('getUserRooms response: ', response);
       if (response.success) {
-        console.log('getChatrooms action success: ', response.chatRooms);
-        dispatch(getChatroomsSuccess(response.chatRooms));
+        console.log('getChatrooms action success: ', response.chatRoomswTime);
+        dispatch(getChatroomsSuccess(response.chatRoomswTime));
       } else {
         console.log('getChatrooms action failure: ', response);
         dispatch(getChatroomsFailure(response));
