@@ -9,7 +9,7 @@ const handleClick = (isUserLoggedIn, navigation) => (
   //   ? navigation.navigate('Home')
   //   : navigation.navigate('Login') // Login
   navigation.replace(
-    isUserLoggedIn ? 'BottomNaviRoutes' : 'Auth',
+    isUserLoggedIn ? 'App' : 'Auth',
   )
 );
 

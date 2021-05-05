@@ -155,6 +155,7 @@ const getAllRoomMess = async (req, res) => {
 
     res.status(200).json({
       success: true,
+      roomID: chatroom.roomID,
       messages: chatroom.messages,
     });
   } catch (error) {

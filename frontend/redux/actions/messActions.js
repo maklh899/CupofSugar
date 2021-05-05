@@ -102,8 +102,9 @@ export const sendMessage = (payload) => function sendmessage(dispatch) {
 const getMessagesRequest = () => ({
   type: messConstants.ALL_MESSAGES_REQUEST,
 });
-const getMessagesSuccess = () => ({
+const getMessagesSuccess = (roomID, messages) => ({
   type: messConstants.ALL_MESSAGES_SUCCESS,
+  payload: { roomID, messages },
 });
 const getMessagesFailure = (error) => ({
   type: messConstants.ALL_MESSAGES_FAILURE,
@@ -120,7 +121,7 @@ export const getMessages = (payload) => function sendmessage(dispatch) {
       console.log('getMessages response: ', response);
       if (response.success) {
         console.log('getMessages action success');
-        dispatch(getMessagesSuccess());
+        dispatch(getMessagesSuccess(response.roomID, response.messages));
       } else {
         console.log('getMessages action failure: ', response.mess);
         dispatch(getMessagesFailure(response.mess));

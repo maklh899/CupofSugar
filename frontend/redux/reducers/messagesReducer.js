@@ -100,12 +100,13 @@ const messagesReducer = function messRed(state = initState, action) {
       error: '',
     };
   case messConstants.ALL_MESSAGES_SUCCESS:
+  {
     return {
       ...state,
       loading: false,
       error: '',
     };
-
+  }
   default:
     return { ...state };
   }

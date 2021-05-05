@@ -6,9 +6,10 @@ import { NavigationContainer, getFocusedRouteNameFromRoute } from '@react-naviga
 import { createStackNavigator } from '@react-navigation/stack';
 import SplashScreen from './SplashScreen';
 import HomeScreen from './HomeScreen';
-import ChatroomsScreen from './ChatroomsScreen';
+import ChatroomsScreen from './ChatroomListScreen';
 import LoginScreen from './SignInScreen';
 import RegisterScreen from './SignUpScreen';
+import ChatroomScreen from './ChatroomScreen';
 import BottomNavi from './UserBottomNavi';
 import BottomNaviRoutes from './BottomNaviRoutes';
 
@@ -51,10 +52,34 @@ function getHeaderTitle(route) {
   case 'Home':
     return 'Home';
   case 'Messages':
-    return 'My Messages';
+    return 'Messages';
+  case 'Chatroom':
+    return 'Chatroom';
   default:
   }
+  return '';
 }
+
+const App = () => (
+  <Stack.Navigator>
+    <Stack.Screen
+      name="BottomNaviRoutes"
+      component={BottomNaviRoutes}
+      options={({ route }) => ({
+        headerTitle: getHeaderTitle(route),
+      })}
+    />
+    <Stack.Screen
+      name="Chatroom"
+      component={ChatroomScreen}
+      options={({ route }) => {
+        console.log('chatroom route: ', route);
+        return { headerTitle: route.params.chatroomName };
+      }}
+    />
+  </Stack.Navigator>
+);
+
 
 const mapStateToProps = (state) => ({
   isUserLoggedIn: state.authentication.isAuthenticated,
@@ -73,6 +98,11 @@ function Navigation(props) {
     {
       name: 'Messages',
       component: ChatroomsScreen,
+    },
+    {
+      name: 'Chatroom',
+      component: ChatroomScreen,
+      hidden: true,
     },
   ];
   const initialScreen = screens.find((cur) => cur.isIntialRoute);
@@ -121,11 +151,12 @@ function Navigation(props) {
         />
         {/* Navigation Drawer as a landing page */}
         <Stack.Screen
-          name="BottomNaviRoutes"
-          component={BottomNaviRoutes}
-          options={({ route }) => ({
-            headerTitle: getHeaderTitle(route),
-          })}
+          name="App"
+          component={App}
+          options={{ headerShown: false }}
+          // options={({ route }) => ({
+          //   headerTitle: getHeaderTitle(route),
+          // })}
         />
       </Stack.Navigator>
     </NavigationContainer>

@@ -44,7 +44,7 @@ const Signin = ({
     if (isUserLoggedIn) {
       setTimeout(() => {
         // navigation.navigate('App');
-        navigation.replace('BottomNaviRoutes');
+        navigation.replace('App');
       }, 3000);
     }
   }, [isUserLoggedIn, storedUserName]);

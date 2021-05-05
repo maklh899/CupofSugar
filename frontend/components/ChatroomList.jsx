@@ -1,6 +1,5 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 import React, { Component } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { connect } from 'react-redux';
 import { StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
@@ -21,7 +20,6 @@ const styles = StyleSheet.create({
   },
 });
 
-const { authFetch } = require('../server');
 
 const mapDispatchToProps = (dispatch) => ({
   getChatrooms: () => dispatch(getChatrooms()),
@@ -37,6 +35,7 @@ function getReformatDate(date) {
   midnight.setHours(0, 0, 0, 0);
 
   // during that day - print time
+  // if its older than that day print date mm/dd/yy
   if (oldDate >= midnight) {
     return oldDate.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
   }
@@ -44,14 +43,6 @@ function getReformatDate(date) {
 }
 
 class ChatroomList extends Component {
-  // constructor() {
-  //   super();
-  //   this.state = {
-  //     loaded: false,
-  //     chatRooms: [],
-  //   };
-  // }
-
   componentDidMount() {
     console.log('message screen - fetching /chat/getUserRooms');
 
@@ -59,11 +50,15 @@ class ChatroomList extends Component {
   }
 
   render() {
-    const { chatRooms } = this.props;
+    const { chatRooms, onPressItem } = this.props;
     console.log('Chatroom List chatRooms: ', chatRooms);
     const chatRoomsList = chatRooms.sort((a, b) => new Date(a.updated_at) < new Date(b.updated_at))
       .map((chatroom) => (
-        <ListItem key={chatroom.roomID} roomsID={chatroom.roomID}>
+        <ListItem
+          key={chatroom.roomID}
+          roomsID={chatroom.roomID}
+          onPress={() => { onPressItem(chatroom); console.log('pressed chatroom: ', chatroom.roomID); }}
+        >
           <Left>
             <Text> {chatroom.roomName} </Text>
           </Left>
@@ -87,6 +82,7 @@ class ChatroomList extends Component {
 }
 
 ChatroomList.propTypes = {
+  onPressItem: PropTypes.func.isRequired,
   chatRooms: PropTypes.arrayOf(PropTypes.object).isRequired,
   getChatrooms: PropTypes.func.isRequired,
 };

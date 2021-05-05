@@ -9,14 +9,11 @@ import {
   Button,
   Body,
   Right,
-  Footer,
-  FooterTab,
   Card,
   CardItem,
   Text,
 } from 'native-base';
 
-import styles from './styles';
 import ChartroomsList from './ChatroomList';
 
 function ChatroomsScreen(obj) {
@@ -25,7 +22,7 @@ function ChatroomsScreen(obj) {
     <Container style={{ flex: 1 }}>
       <Content>
         <ChartroomsList onPressItem={(chatroom) => {
-          navigation.navigate('Chatroom', { chatroomID: chatroom._id, chatroomName: chatroom.chatroomName });
+          navigation.navigate('Chatroom', { chatroomID: chatroom.roomID, chatroomName: chatroom.roomName });
         }}
         />
       </Content>

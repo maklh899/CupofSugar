@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import BottomNavi from './UserBottomNavi';
 import HomeScreen from './HomeScreen';
-import ChatroomsScreen from './ChatroomsScreen';
+import ChatroomsScreen from './ChatroomListScreen';
+import ChatroomScreen from './ChatroomScreen';
 
 
 // const Stack = createStackNavigator();
@@ -23,6 +24,11 @@ function BottomNaviRoutes(props) {
       name: 'Messages',
       component: ChatroomsScreen,
     },
+    {
+      name: 'Chatroom',
+      component: ChatroomScreen,
+      hidden: true,
+    },
   ];
 
   return (
@@ -31,7 +37,8 @@ function BottomNaviRoutes(props) {
       screenOptions={{ headerShown: true }}
     >
       {
-        screens.map((screen) => (<Tab.Screen {...screen} key={screen.name} />))
+        screens.filter((screen) => !screen.hidden)
+          .map((screen) => (<Tab.Screen {...screen} key={screen.name} />))
       }
     </Tab.Navigator>
   );
