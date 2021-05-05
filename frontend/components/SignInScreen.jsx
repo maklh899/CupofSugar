@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import styles from './styles';
-import { Button, View } from 'react-native';
+// import styles from './styles';
+import { Button, View, StyleSheet } from 'react-native';
 import {
   Container,
   Header,
@@ -15,6 +15,17 @@ import {
   Item,
 } from 'native-base';
 import { signIn } from '../redux/actions/userActions';
+
+const styles = StyleSheet.create({
+  screenContainer: {
+    alignItems: 'center',
+    flex: 1,
+  },
+  card: {
+    marginTop: 30,
+    width: '90%',
+  },
+});
 
 // import history from '../helpers/history';
 const mapStateToProps = (state) => ({

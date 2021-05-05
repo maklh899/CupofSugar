@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, ScrollView, SafeAreaView} from 'react-native';
 import PropTypes from 'prop-types';
 import {
   Container,
@@ -74,9 +74,10 @@ class MessagesList extends Component {
     return (
       <Container style={{ padding: '1%' }}>
         <Content>
-          <List>
-            {messageList}
-          </List>
+
+              {messageList}
+
+          
         </Content>
       </Container>
     );
