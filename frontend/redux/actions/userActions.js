@@ -18,22 +18,53 @@ const signUpFailure = (error) => ({
   payload: error,
 });
 
-export const signUp = (user, history) => function signup(dispatch) {
+export const signUp = (user) => function signup(dispatch) {
   dispatch(signUpRequest());
-  axios.post(`${SERVER_ADDR}/user/signUp`, user);
-  axios({
-    method: 'POST',
-    url: `${SERVER_ADDR}/user/signUp`,
-    data: user,
-  })
+  console.log('SignUp action user: ', user);
+  console.log(`URL: ${SERVER_ADDR}/users/signUp`);
+  fetch(
+    `${SERVER_ADDR}/users/signUp`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        firstName: user.firstname,
+        lastName: user.lastname,
+        userName: user.username,
+        email: user.email,
+        password: user.password,
+        aptId: user.apt,
+      }),
+    },
+  )
     .then((response) => {
-      const { data } = response.data;
-      dispatch(signUpSuccess(data));
-      history.push('/');
+      console.log('response');
+      if (response.status < 300) {
+        response.json().then((responseJSON) => {
+          console.log('SignUp action success: ', responseJSON);
+          dispatch(signUpSuccess(responseJSON.user));
+        });
+      } else {
+        response.json().then((responseJSON) => {
+          console.log('SignUp action failure: ', responseJSON);
+          // dispatch(isLoading(false));
+          dispatch(signUpFailure(responseJSON.mess));
+        });
+      }
     })
     .catch((error) => {
-      console.log(error);
-      dispatch(signUpFailure(error));
+      console.log('SignUp action error:', user, error);
+      if (error.response) {
+        console.log("There's an issue with your Response ", error.response.status);
+      } else if (error.request) {
+        console.log("There's an issue with your Request.");
+      } else {
+        console.log('Message: ', error.message);
+      }
+      // dispatch(isLoading(false))
+      dispatch(signUpFailure(error.message));
     });
 };
 
@@ -63,12 +94,8 @@ export const signIn = (payload) => function signin(dispatch) {
 
   // axios.post(`${SERVER_ADDR}/users/signIn`, payload)
   fetch(
-    // `${SERVER_ADDR}/users/findAll`, {
-    //   method: 'GET',
     `${SERVER_ADDR}/users/signIn`, {
       method: 'POST',
-      // data: payload,
-
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
@@ -108,15 +135,6 @@ export const signIn = (payload) => function signin(dispatch) {
       // dispatch(isLoading(false))
       dispatch(signInFailure(error.message));
     });
-  // .then((response) => {
-  //     const { token } = response.data;
-  //     localStorage.setItem('USER-TOKEN', token);
-  //     dispatch(signInSuccess(token));
-  //     history.push('/home');
-  // })
-  // .catch((error) => {
-  //     dispatch(signInFailure(error));
-  // });
 };
 
 // sign out action creators

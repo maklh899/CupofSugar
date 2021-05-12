@@ -14,9 +14,13 @@ const initState = {
   //     : null,
   currentUser: null,
   token: null,
+  signInErr: '',
+  signUpErr: '',
   error: '',
   loading: false,
   isAuthenticated: false,
+  createdAccount: false,
+  username: '',
 };
 
 const authenticationReducer = function authRed(state = initState, action) {
@@ -24,9 +28,15 @@ const authenticationReducer = function authRed(state = initState, action) {
   case userConstants.SIGN_IN_REQUEST:
     return {
       ...state,
-      error: '',
+      signInErr: '',
     };
   case userConstants.SIGN_UP_REQUEST:
+    return {
+      ...state,
+      loading: true,
+      isAuthenticated: false,
+      signUpErr: '',
+    };
   case userConstants.SIGN_OUT_REQUEST:
     return {
       ...state,
@@ -36,9 +46,13 @@ const authenticationReducer = function authRed(state = initState, action) {
   case userConstants.SIGN_IN_FAILURE:
     return {
       ...state,
-      error: action.payload,
+      signInErr: action.payload,
     };
   case userConstants.SIGN_UP_FAILURE:
+    return {
+      ...state,
+      signUpErr: action.payload,
+    };
   case userConstants.SIGN_OUT_FAILURE:
     return {
       ...state,
@@ -48,6 +62,12 @@ const authenticationReducer = function authRed(state = initState, action) {
       isAuthenticated: false,
     };
   case userConstants.SIGN_UP_SUCCESS:
+    return {
+      ...state,
+      loading: false,
+      signUpErr: '',
+      createdAccount: true,
+    };
   case userConstants.SIGN_IN_SUCCESS: {
     // const { username = 'anon' } = action.payload;
     return {
@@ -56,8 +76,8 @@ const authenticationReducer = function authRed(state = initState, action) {
       token: action.payload.token,
       currentUser: action.payload.user,
       isAuthenticated: true,
-      error: '',
-      // username,
+      signInErr: '',
+      username: action.payload.user.userName,
     };
   }
   case userConstants.SIGN_OUT_SUCCESS:

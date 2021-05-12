@@ -1,16 +1,28 @@
-const { createUser, signInUser, getUsers } = require('../services/userService');
+const { createUser, signInUser, getUsers, findUserByUsername, updateUserDoc } = require('../services/userService');
+const { addTenant } = require('../services/aptService');
+// const { addTenantToApt } = require('../controller/aptControl');
 
 const signUp = async (req, res, next) => {
   try {
     const newUser = req.body;
-    console.log(createUser);
+    // console.log('userControl-signUp() newUser:', newUser);
+
     const savedUser = await createUser(newUser);
+
+    console.log('userControl-signUp() savedUser:', savedUser);
+    const apt = await addTenant({ user: savedUser.userName, userId: savedUser['_id'], apt: newUser.aptId });
+
+    console.log('userControl-signUp() apt: ', apt);
+    // UPDATE APTID FOR USER DOCUMENT
+    // const currUser = await findUserByUsername(req.body.user);
+    // const userDoc = await updateUserDoc(currUser['_id'], { aptId: newApt.AptNumber });
+
     res.status(200).json({
       success: true,
       data: savedUser,
     });
   } catch (error) {
-    res.status(500).json({
+    res.status(401).json({
       success: false,
       mess: error.message,
     });

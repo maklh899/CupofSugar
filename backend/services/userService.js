@@ -18,6 +18,7 @@ async function createUser(payload) {
             firstName: payload.firstName,
             lastName: payload.lastName,
             userName: payload.userName,
+            aptId: 0,
           });
           return newUser.save();
         })

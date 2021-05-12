@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 // import styles from './styles';
-import { Button, View, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import {
   Container,
   Header,
@@ -13,25 +13,40 @@ import {
   Text,
   Label,
   Item,
+  Form,
+  Button,
 } from 'native-base';
 import { signIn } from '../redux/actions/userActions';
 
 const styles = StyleSheet.create({
   screenContainer: {
-    alignItems: 'center',
     flex: 1,
+    position: 'relative',
   },
   card: {
     marginTop: 30,
     width: '90%',
   },
+  bottomView: {
+    margin: 40,
+    display: 'flex',
+    height: '30%',
+    width: '90%',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  button: {
+    width: '90%',
+    justifyContent: 'center',
+    // alignItems: 'center',
+  },
 });
 
-// import history from '../helpers/history';
 const mapStateToProps = (state) => ({
   storedUserName: state.authentication.username,
   isUserLoggedIn: state.authentication.isAuthenticated,
-  error: state.authentication.error,
+  error: state.authentication.signInErr,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -68,10 +83,6 @@ const Signin = ({
     setPassword(event);
   };
 
-  // const handleSignInClick = (event) => {
-  //     event.preventDefault();
-  //     dispatch(signIn({ userName, password }));
-
   Signin.defaultProps = {
     storedUserName: '',
   };
@@ -83,13 +94,54 @@ const Signin = ({
     error: PropTypes.string.isRequired,
     navigation: PropTypes.shape({
       navigate: PropTypes.func.isRequired,
+      replace: PropTypes.func.isRequired,
     }).isRequired,
   };
 
   // onChangeText={(text) => { handleUsernameChange(text); console.log('input:', text); }}
   return (
     <Container style={styles.screenContainer}>
-      <Card style={styles.card}>
+      <Form>
+        <Item floatingLabel>
+          <Label>Username</Label>
+          <Input
+            onChangeText={(text) => { handleUsernameChange(text); }}
+          />
+        </Item>
+        <Item floatingLabel last>
+          <Label>Password</Label>
+          <Input
+            value={password}
+            onChangeText={(text) => { handlePasswordChange(text); }}
+          />
+        </Item>
+        <View style={styles.bottomView}>
+          <Button
+            style={styles.button}
+            title="login"
+            onPress={() => login(userName, password)}
+          >
+            <Text> Login </Text>
+          </Button>
+          { error !== ''
+          && (
+            <Text>
+              {error}
+            </Text>
+          )}
+          <Button
+            style={styles.button}
+            primary
+            onPress={() => navigation.navigate('Register')}
+          >
+            <Text>Don't have an account?</Text>
+          </Button>
+          <Text>{status}</Text>
+        </View>
+
+      </Form>
+
+      {/* <Card style={styles.card}>
         <CardItem>
           <Item stackedLabel>
             <Label>User Name</Label>
@@ -129,7 +181,7 @@ const Signin = ({
           />
         </CardItem>
         <Text>{status}</Text>
-      </Card>
+      </Card> */}
     </Container>
 
   );

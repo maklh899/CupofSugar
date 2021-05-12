@@ -1,4 +1,5 @@
 const Apt = require('../models/aptModel');
+const User = require('../models/userModel');
 
 // get apartment tenants by username
 async function getAptTenants(payload) {
@@ -16,7 +17,6 @@ async function getAptTenants(payload) {
 }
 
 // create new Apartment
-
 async function createApt(payload) {
   console.log('createApt() payload:', payload);
   const stats = await Apt.find();
@@ -31,7 +31,28 @@ async function createApt(payload) {
   return newApt.save();
 }
 
-module.exports = { getAptTenants, createApt };
+async function addTenant(payload) {
+  console.log('aptService-addTenant payload:', payload);
+  return Apt.findOne({ AptNumber: payload.apt })
+    .exec()
+    .then(
+      (apt) => {
+        if (!apt) {
+          const newApt = createApt({ members: [payload.user], rent: 1720 });
+          return User.updateOne({ _id: payload.userId }, { aptId: payload.apt })
+            .exec()
+            .then(() => newApt);
+        }
+        apt.tenants.push(payload.user);
+        return apt.save()
+          .then(() => User.updateOne({ _id: payload.userId }, { aptId: payload.apt })
+            .exec()
+            .then(() => apt));
+      },
+    );
+}
+
+module.exports = { getAptTenants, createApt, addTenant };
 
 // {
 // 	"rent": 1720,

@@ -1,5 +1,4 @@
 const mongoose = require('mongoose').set('debug', true);
-const { Users } = require('./userModel');
 
 mongoose.pluralize(null);
 const aptSchema = new mongoose.Schema({
