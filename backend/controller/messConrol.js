@@ -75,7 +75,7 @@ const createChatRoom = async (req, res) => {
         usernames.push(currUser.userName);
         roomName = usernames.join(', ');
       } else {
-        res.status(500).json({
+        res.status(401).json({
           success: false,
           mess: 'Usernames/apt numbers have not been specified.',
         });
@@ -109,7 +109,7 @@ const createChatRoom = async (req, res) => {
     }
   } catch (error) {
     console.log('createChatRoom error: ', error.message);
-    res.status(500).json({
+    res.status(401).json({
       success: false,
       mess: error.message,
     });

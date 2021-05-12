@@ -74,10 +74,8 @@ class MessagesList extends Component {
     return (
       <Container style={{ padding: '1%' }}>
         <Content>
-
               {messageList}
 
-          
         </Content>
       </Container>
     );

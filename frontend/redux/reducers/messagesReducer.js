@@ -9,6 +9,8 @@ const initState = {
   //     : null,
   chatRooms: [],
   loading: false,
+  createdRoom: false,
+  createdRoomErr: '',
 };
 
 const messagesReducer = function messRed(state = initState, action) {
@@ -22,8 +24,9 @@ const messagesReducer = function messRed(state = initState, action) {
   case messConstants.NEW_CHATROOM_REQUEST:
     return {
       ...state,
+      createdRoom: false,
       loading: true,
-      error: '',
+      createdRoomErr: '',
     };
   case messConstants.DEL_CHATROOM_REQUEST:
     return {
@@ -54,7 +57,7 @@ const messagesReducer = function messRed(state = initState, action) {
     return {
       ...state,
       loading: false,
-      error: action.payload,
+      createdRoomErr: action.payload,
     };
   case messConstants.DEL_CHATROOM_FAILURE:
     return {
@@ -84,8 +87,9 @@ const messagesReducer = function messRed(state = initState, action) {
   case messConstants.NEW_CHATROOM_SUCCESS:
     return {
       ...state,
+      createdRoom: true,
       loading: false,
-      error: '',
+      createdRoomErr: '',
     };
   case messConstants.DEL_CHATROOM_SUCCESS:
     return {

@@ -59,7 +59,6 @@ const ChatrooomScreen = (props) => {
         style={{ flex: 1 }}
       >
         <View>
-
           <CardItem style={{ justifyContent: 'space-between' }}>
             <Item regular style={{ width: '80%' }}>
               <Input

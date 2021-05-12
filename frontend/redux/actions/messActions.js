@@ -50,6 +50,8 @@ const newChatroomFailure = (error) => ({
   payload: error,
 });
 
+// "usernames":["dedny", "mak"],
+// "aptIds": ["1", "2"]
 export const newChatroom = (payload) => function newchatroom(dispatch) {
   console.log(`URL: ${SERVER_ADDR}/chat/createChatRoom`);
   dispatch(newChatroomRequest);
@@ -65,6 +67,11 @@ export const newChatroom = (payload) => function newchatroom(dispatch) {
         console.log('newchatroom action failure: ', response.mess);
         dispatch(newChatroomFailure(response.mess));
       }
+    })
+    .catch((error) => {
+      console.log('newChatroom action error:', payload, error);
+
+      dispatch(newChatroomFailure(error.message));
     });
 };
 
@@ -79,8 +86,7 @@ const sendMessageFailure = (error) => ({
   payload: error,
 });
 
-
-//params: roomId, message
+// params: roomId, message
 export const sendMessage = (payload) => function sendmessage(dispatch) {
   console.log(`URL: ${SERVER_ADDR}/chat/${payload.roomId}/postMessage`);
   dispatch(sendMessageRequest);
@@ -96,6 +102,11 @@ export const sendMessage = (payload) => function sendmessage(dispatch) {
         console.log('sendMessage action failure: ', response.mess);
         dispatch(sendMessageFailure(response.mess));
       }
+    })
+    .catch((error) => {
+      console.log('sendMessage action error:', payload, error);
+
+      dispatch(sendMessageFailure(error.message));
     });
 };
 
@@ -126,6 +137,10 @@ export const getMessages = (payload) => function sendmessage(dispatch) {
         console.log('getMessages action failure: ', response.mess);
         dispatch(getMessagesFailure(response.mess));
       }
+    })
+    .catch((error) => {
+      console.log('getMessages action error:', payload, error);
+
+      dispatch(getMessagesFailure(error.message));
     });
 };
-

@@ -7,6 +7,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import SplashScreen from './SplashScreen';
 import HomeScreen from './HomeScreen';
 import ChatroomsScreen from './ChatroomListScreen';
+import CreateChatScreen from './CreateChatScreen';
 import LoginScreen from './SignInScreen';
 import RegisterScreen from './SignUpScreen';
 import ChatroomScreen from './ChatroomScreen';
@@ -55,6 +56,8 @@ function getHeaderTitle(route) {
     return 'Messages';
   case 'Chatroom':
     return 'Chatroom';
+  case ' Create Chatroom':
+    return 'Create Chatroom';
   default:
   }
   return '';
@@ -76,6 +79,13 @@ const App = () => (
         console.log('chatroom route: ', route);
         return { headerTitle: route.params.chatroomName };
       }}
+    />
+    <Stack.Screen
+      name="Create Chatroom"
+      component={CreateChatScreen}
+      options={({ route }) => ({
+        headerTitle: getHeaderTitle(route),
+      })}
     />
   </Stack.Navigator>
 );
