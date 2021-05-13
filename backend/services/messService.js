@@ -3,7 +3,7 @@ const Rooms = require('../models/chatroomModel');
 
 // returns chatrooms of a user
 async function getAllUserRooms(userId) {
-  console.log('getAllUserRooms() userId:', userId);
+  // console.log('getAllUserRooms() userId:', userId);
   return User.findOne({ '_id': userId })
     .exec()
     .then((user) => {
@@ -26,7 +26,7 @@ async function createChatroom(payload) {
 }
 
 async function getChatroombyId(payload) {
-  console.log('getChatroombyId() messService payload:', payload);
+  // console.log('getChatroombyId() messService payload:', payload);
   return Rooms.findOne({ '_id': payload })
     .exec()
     .then((room) => {

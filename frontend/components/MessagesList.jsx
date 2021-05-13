@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, ScrollView, SafeAreaView} from 'react-native';
+import { StyleSheet, ScrollView, SafeAreaView } from 'react-native';
 import PropTypes from 'prop-types';
 import {
   Container,
@@ -10,20 +10,32 @@ import {
   Right,
   Content,
   ListItem,
+  Body,
   Text,
+  Card,
+  CardItem,
 } from 'native-base';
 import { getMessages } from '../redux/actions';
-const { authFetch } = require('../server');
 
-// const mapDispatchToProps = (dispatch) => ({
-//   getMessages: () => dispatch(getMessages()),
-// });
+const { authFetch } = require('../server');
 
 const mapStateToProps = (state) => ({
   currUsername: state.authentication.currentUser.userName,
 
 });
 
+function getReformatDate(date) {
+  const oldDate = new Date(date);
+  const midnight = new Date();
+  midnight.setHours(0, 0, 0, 0);
+
+  // during that day - print time
+  // if its older than that day print date mm/dd/yy
+  if (oldDate >= midnight) {
+    return oldDate.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
+  }
+  return oldDate.toLocaleDateString('en-US');
+}
 
 class MessagesList extends Component {
   constructor() {
@@ -39,7 +51,8 @@ class MessagesList extends Component {
   componentDidMount() {
     console.log('message screen - fetching /chat/getMessages');
 
-    this.updateMessages();
+    setInterval(this.updateMessages, 1000);
+    // this.updateMessages();
   }
 
   updateMessages() {
@@ -65,16 +78,24 @@ class MessagesList extends Component {
     const { messagesList } = this.state;
     // console.log('Chatroom List chatRooms: ', chatRooms);
     const messageList = messagesList.map((messages) => (
-      <ListItem key={messages['_id']}>
-        <Text> {messages.message_body}</Text>
-      </ListItem>
+      <Card key={messages._id}>
+        <CardItem header bordered>
+          <Text>{messages.sender}</Text>
+          <Right>
+            <Text>{getReformatDate(messages.created_at)}</Text>
+          </Right>
+        </CardItem>
+        <CardItem>
+          <Text> {messages.message_body}</Text>
+        </CardItem>
+      </Card>
 
     ));
 
     return (
       <Container style={{ padding: '1%' }}>
         <Content>
-              {messageList}
+          {messageList}
 
         </Content>
       </Container>

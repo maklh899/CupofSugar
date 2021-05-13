@@ -19,15 +19,14 @@ const getChatroomsFailure = (error) => ({
 });
 
 export const getChatrooms = () => function getchatrooms(dispatch) {
-  //console.log('getChatrooms authFetch: ', authFetch('/chat/getUserRooms'));
-  console.log(`URL: ${SERVER_ADDR}/chat/getUserRooms`);
+  // console.log('getChatrooms authFetch: ', authFetch('/chat/getUserRooms'));
+  // console.log(`URL: ${SERVER_ADDR}/chat/getUserRooms`);
   dispatch(getChatroomsRequest);
-  // getChatRooms(userToken)
   authFetch('/chat/getUserRooms')
     .then((response) => {
-      console.log('getUserRooms response: ', response);
+      // console.log('getUserRooms response: ', response);
       if (response.success) {
-        console.log('getChatrooms action success: ', response.chatRoomswTime);
+        // console.log('getChatrooms action success: ', response.chatRoomswTime);
         dispatch(getChatroomsSuccess(response.chatRoomswTime));
       } else {
         console.log('getChatrooms action failure: ', response);
@@ -54,6 +53,7 @@ const newChatroomFailure = (error) => ({
 // "aptIds": ["1", "2"]
 export const newChatroom = (payload) => function newchatroom(dispatch) {
   console.log(`URL: ${SERVER_ADDR}/chat/createChatRoom`);
+  console.log('newChatroom action payload:', payload);
   dispatch(newChatroomRequest);
   // getChatRooms(userToken)
   const body = JSON.stringify({ aptIds: payload.aptIds, usernames: payload.usernames });
@@ -69,7 +69,7 @@ export const newChatroom = (payload) => function newchatroom(dispatch) {
       }
     })
     .catch((error) => {
-      console.log('newChatroom action error:', payload, error);
+      console.log('newChatroom action error:', error);
 
       dispatch(newChatroomFailure(error.message));
     });

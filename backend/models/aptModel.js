@@ -1,4 +1,5 @@
-const mongoose = require('mongoose').set('debug', true);
+// const mongoose = require('mongoose').set('debug', true);
+const mongoose = require('mongoose');
 
 mongoose.pluralize(null);
 const aptSchema = new mongoose.Schema({

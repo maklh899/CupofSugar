@@ -13,11 +13,11 @@ const { getAptTenants } = require('../services/aptService');
 
 const getUserRooms = async (req, res) => {
   try {
-    console.log('auth token: ', req.headers['x-auth-token']);
+    // console.log('auth token: ', req.headers['x-auth-token']);
     const token = req.headers['x-auth-token'];
     const verToken = jwt.verify(token, key.JWT_SECRET);
     if (verToken) {
-      console.log('getUserRooms token verified: ', verToken);
+      // console.log('getUserRooms token verified: ', verToken);
 
       const chatRooms = await getAllUserRooms(verToken['_id']);
       const chatRoomswTime = Array(chatRooms.length);
@@ -66,16 +66,26 @@ const createChatRoom = async (req, res) => {
 
       let roomName;
 
-      if (req.body.aptIds) {
-        aptIds = req.body.aptIds;
-        aptIds.push(currUser.aptId);
+      if (req.body.aptIds.length !== 0) {
+        console.log('createChatRoom req.body.aptIds: ', req.body.aptIds);
+        aptIds = [currUser.aptId];
+        for (let i = 0; i < req.body.aptIds.length; i += 1) {
+          console.log('createChatRoom currUser.aptId: ', currUser.aptId);
+          if (currUser.aptId.toString() !== req.body.aptIds[i].toString()) {
+            console.log('createChatRoom req.body.aptIds[i]: ', req.body.aptIds[i]);
+            aptIds.push(req.body.aptIds[i]);
+          }
+        }
+        // aptIds = req.body.aptIds;
+
         roomName = "APT " + aptIds.join(', APT ');
+        console.log('createChatRoom roomname aptIds: ', roomName);
       } else if (req.body.usernames) {
         usernames = req.body.usernames;
         usernames.push(currUser.userName);
         roomName = usernames.join(', ');
       } else {
-        res.status(401).json({
+        res.status(500).json({
           success: false,
           mess: 'Usernames/apt numbers have not been specified.',
         });
@@ -96,7 +106,7 @@ const createChatRoom = async (req, res) => {
 
       console.log('createChatroom usernames: ', usernames);
       const chatRoom = await createChatroom({ roomName, usernames });
-      console.log('createChatRoom chatRooms response: ', chatRoom);
+      // console.log('createChatRoom chatRooms response: ', chatRoom);
 
       for (let i = 0; i < userDocs.length; i += 1) {
         userDocs[i].messageRooms.push({ roomID: chatRoom['_id'], roomName });
@@ -109,7 +119,7 @@ const createChatRoom = async (req, res) => {
     }
   } catch (error) {
     console.log('createChatRoom error: ', error.message);
-    res.status(401).json({
+    res.status(500).json({
       success: false,
       mess: error.message,
     });
@@ -143,15 +153,15 @@ const postMessage = async (req, res) => {
 // params: none
 const getAllRoomMess = async (req, res) => {
   try {
-    console.log('---getAllRoomMess messControl---');
-    console.log('auth token: ', req.headers['x-auth-token']);
+    // console.log('---getAllRoomMess messControl---');
+    // console.log('auth token: ', req.headers['x-auth-token']);
     const token = req.headers['x-auth-token'];
     const verToken = jwt.verify(token, key.JWT_SECRET);
 
     const { roomId } = req.params;
 
     const chatroom = await getChatroombyId(roomId);
-    console.log('getAllRoomMess chatroom.messages: ', chatroom.messages);
+    // console.log('getAllRoomMess chatroom.messages: ', chatroom.messages);
 
     res.status(200).json({
       success: true,

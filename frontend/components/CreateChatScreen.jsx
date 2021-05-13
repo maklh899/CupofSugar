@@ -115,7 +115,7 @@ const CreateChatScreen = ({
             <Body>
               <Form>
                 <Item stackedLabel>
-                  <Label>ex. APT 1, APT 2, APT 3</Label>
+                  <Label>ex. 1, 2, 3</Label>
                   <Input
                     value={chatApt}
                     onChangeText={(text) => { handleChatAptChange(text); }}

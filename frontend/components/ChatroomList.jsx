@@ -20,9 +20,8 @@ const styles = StyleSheet.create({
   },
 });
 
-
 const mapDispatchToProps = (dispatch) => ({
-  getChatrooms: () => dispatch(getChatrooms()),
+  getchatrooms: () => dispatch(getChatrooms()),
 });
 
 const mapStateToProps = (state) => ({
@@ -46,12 +45,15 @@ class ChatroomList extends Component {
   componentDidMount() {
     console.log('message screen - fetching /chat/getUserRooms');
 
-    this.props.getChatrooms();
+    // 1000ms = 1sec refresh
+    const { getchatrooms } = this.props;
+    setInterval(getchatrooms, 1000);
+    // this.props.getchatrooms();
   }
 
   render() {
     const { chatRooms, onPressItem } = this.props;
-    console.log('Chatroom List chatRooms: ', chatRooms);
+    // console.log('Chatroom List chatRooms: ', chatRooms);
     const chatRoomsList = chatRooms.sort((a, b) => new Date(a.updated_at) < new Date(b.updated_at))
       .map((chatroom) => (
         <ListItem
@@ -84,7 +86,7 @@ class ChatroomList extends Component {
 ChatroomList.propTypes = {
   onPressItem: PropTypes.func.isRequired,
   chatRooms: PropTypes.arrayOf(PropTypes.object).isRequired,
-  getChatrooms: PropTypes.func.isRequired,
+  getchatrooms: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChatroomList);

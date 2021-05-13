@@ -7,18 +7,10 @@ import {
 
 import {
   Container,
-  List,
-  Header,
-  Title,
-  Content,
   Button,
-  Right,
-  Card,
   CardItem,
   Item,
-  Label,
   Input,
-  Form,
   Text,
 } from 'native-base';
 import MessagesList from './MessagesList';
