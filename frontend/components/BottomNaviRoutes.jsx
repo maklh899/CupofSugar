@@ -6,7 +6,7 @@ import BottomNavi from './UserBottomNavi';
 import HomeScreen from './HomeScreen';
 import ChatroomsScreen from './ChatroomListScreen';
 import ChatroomScreen from './ChatroomScreen';
-
+import ProfileScreen from './ProfileScreen';
 
 // const Stack = createStackNavigator();
 
@@ -28,6 +28,10 @@ function BottomNaviRoutes(props) {
       name: 'Chatroom',
       component: ChatroomScreen,
       hidden: true,
+    },
+    {
+      name: 'Profile',
+      component: ProfileScreen,
     },
   ];
 

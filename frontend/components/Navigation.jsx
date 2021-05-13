@@ -56,8 +56,10 @@ function getHeaderTitle(route) {
     return 'Messages';
   case 'Chatroom':
     return 'Chatroom';
-  case ' Create Chatroom':
+  case 'Create Chatroom':
     return 'Create Chatroom';
+  case 'Profile':
+    return 'My Profile';
   default:
   }
   return '';

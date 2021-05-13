@@ -1,4 +1,4 @@
-// import jwt from 'jsonwebtoken';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { userConstants } from '../constants';
 
 // export const isValidToken = (token) => {
@@ -81,7 +81,7 @@ const authenticationReducer = function authRed(state = initState, action) {
     };
   }
   case userConstants.SIGN_OUT_SUCCESS:
-    //localStorage.removeItem('USER-TOKEN');
+    AsyncStorage.removeItem('authToken');
     return {
       ...state,
       isAuthenticated: false,

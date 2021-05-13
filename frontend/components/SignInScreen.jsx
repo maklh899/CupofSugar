@@ -116,6 +116,7 @@ const Signin = ({
           />
         </Item>
         <View style={styles.bottomView}>
+          <Text>{status}</Text>
           <Button
             style={styles.button}
             title="login"
@@ -136,52 +137,9 @@ const Signin = ({
           >
             <Text>Don't have an account?</Text>
           </Button>
-          <Text>{status}</Text>
         </View>
 
       </Form>
-
-      {/* <Card style={styles.card}>
-        <CardItem>
-          <Item stackedLabel>
-            <Label>User Name</Label>
-            <Input
-              // value={userName}
-              onChangeText={(text) => { handleUsernameChange(text); }}
-            />
-          </Item>
-        </CardItem>
-        <CardItem>
-          <Item stackedLabel>
-            <Label>Password</Label>
-            <Input
-              value={password}
-              onChangeText={(text) => { handlePasswordChange(text); }}
-            />
-          </Item>
-        </CardItem>
-        <CardItem>
-          <Button
-            title="login"
-            onPress={() => login(userName, password)}
-          />
-          { error !== ''
-          && (
-            <Text>
-              {error}
-            </Text>
-          )}
-
-        </CardItem>
-        <CardItem>
-          <Button
-            title="Don't have an account?"
-            transparent
-            onPress={() => navigation.navigate('Register')}
-          />
-        </CardItem>
-        <Text>{status}</Text>
-      </Card> */}
     </Container>
 
   );

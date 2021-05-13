@@ -1,4 +1,3 @@
-import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { userConstants } from '../constants';
 
@@ -138,45 +137,37 @@ export const signIn = (payload) => function signin(dispatch) {
 };
 
 // sign out action creators
-const signOutRequest = function signoutreq() {
-  return {
-    type: userConstants.SIGN_OUT_REQUEST,
-  };
+const signOutRequest = () => ({
+  type: userConstants.SIGN_OUT_REQUEST,
+});
+
+const signOutSuccess = () => ({
+  type: userConstants.SIGN_OUT_SUCCESS,
+});
+
+const signOutFailure = () => ({
+  type: userConstants.SIGN_OUT_FAILURE,
+});
+
+export const signOut = () => function signout(dispatch) {
+  console.log('userActions SignOut');
+
+  dispatch(signOutRequest());
+  AsyncStorage.clear();
+
+  if (AsyncStorage.getItem('authToken')) {
+    dispatch(signOutFailure());
+  } else {
+    dispatch(signOutSuccess());
+  }
+  // return function signoutdispatch(dispatch) {
+  //   dispatch(signOutRequest());
+  //   AsyncStorage.clear();
+
+  //   if (localStorage.getItem('authToken')) {
+  //     dispatch(signOutFailure());
+  //   } else {
+  //     dispatch(signOutSuccess());
+  //   }
+  // };
 };
-
-const signOutSuccess = function signoutsucc() {
-  return {
-    type: userConstants.SIGN_OUT_SUCCESS,
-  };
-};
-
-const signOutFailure = function signoutfail() {
-  return {
-    type: userConstants.SIGN_OUT_FAILURE,
-  };
-};
-
-export const signOut = function signout(history) {
-  return function signoutdispatch(dispatch) {
-    dispatch(signOutRequest());
-    localStorage.clear();
-    history.push('/signin');
-    if (localStorage.getItem('USER_TOKEN')) {
-      dispatch(signOutFailure());
-    } else {
-      dispatch(signOutSuccess());
-    }
-  };
-};
-
-// const userActions = {
-//     login,
-//     logout,
-//     getAll,
-// };
-
-// exports.login = login;
-// exports.logout = logout;
-// exports.getAll = getAll;
-
-// export default userActions;
