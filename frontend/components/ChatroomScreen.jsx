@@ -39,7 +39,7 @@ const ChatrooomScreen = (props) => {
 
   const handleMessageChange = (event) => {
     setNewMessage(event);
-    console.log('inputted message:', event);
+    // console.log('inputted message:', event);
   };
 
   return (
@@ -48,17 +48,24 @@ const ChatrooomScreen = (props) => {
       <MessagesList roomId={params.chatroomID} />
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={{ flex: 1 }}
+        style={{ flex: (newMessage.length > 0) ? 1 : undefined }}
       >
         <View>
           <CardItem style={{ justifyContent: 'space-between' }}>
             <Item regular style={{ width: '80%' }}>
               <Input
+                value={newMessage}
                 placeholder="Message"
                 onChangeText={(text) => { handleMessageChange(text); }}
               />
             </Item>
-            <Button info onPress={() => sendmessage(newMessage, params.chatroomID)}>
+            <Button
+              info
+              onPress={() => {
+                sendmessage(newMessage, params.chatroomID);
+                handleMessageChange('');
+              }}
+            >
               <Text>Send</Text>
             </Button>
           </CardItem>

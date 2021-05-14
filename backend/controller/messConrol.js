@@ -85,7 +85,7 @@ const createChatRoom = async (req, res) => {
         usernames.push(currUser.userName);
         roomName = usernames.join(', ');
       } else {
-        res.status(500).json({
+        res.status(200).json({
           success: false,
           mess: 'Usernames/apt numbers have not been specified.',
         });
@@ -100,7 +100,10 @@ const createChatRoom = async (req, res) => {
       }
       for (let i = 0; i < usernames.length; i += 1) {
         const user = await findUserByUsername(usernames[i]);
-        // console.log('createChatroom user: ', user);
+        console.log('createChatroom user: ', user);
+        if (!user) {
+          throw Error(`User (${usernames[i]}) does not exist.`);
+        }
         userDocs.push(user);
       }
 
@@ -119,7 +122,7 @@ const createChatRoom = async (req, res) => {
     }
   } catch (error) {
     console.log('createChatRoom error: ', error.message);
-    res.status(500).json({
+    res.status(200).json({
       success: false,
       mess: error.message,
     });
@@ -157,6 +160,8 @@ const getAllRoomMess = async (req, res) => {
     // console.log('auth token: ', req.headers['x-auth-token']);
     const token = req.headers['x-auth-token'];
     const verToken = jwt.verify(token, key.JWT_SECRET);
+
+    // console.log(' getAllRoomMess verToken: ', verToken);
 
     const { roomId } = req.params;
 

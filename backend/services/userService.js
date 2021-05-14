@@ -35,7 +35,7 @@ function signInUser(payload) {
     .exec()
     .then((user) => {
       if (!user) {
-        throw new Error('Incorrect user name, try again');
+        throw new Error('Username does not exist, try again');
       } else {
         return bcrypt
           .compare(payload.password, user.password)

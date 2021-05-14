@@ -64,17 +64,10 @@ const ProfileScreen = ({
 }) => {
   console.log('ProfileScreen currUser:', currUser);
   console.log('error', error);
-  // useEffect(() => {
-  //   setStatus(createdAccount
-  //     ? 'Successfully Created Account'
-  //     : 'Not Logged In');
-  //   if (createdAccount) {
-  //     setTimeout(() => {
-  //       navigation.navigate('Login');
-  //       ///navigation.replace('App');
-  //     }, 3000);
-  //   }
-  // }, [createdAccount]);
+
+  ProfileScreen.defaultProps = {
+    error: '',
+  };
 
   ProfileScreen.propTypes = {
     loggout: PropTypes.func.isRequired,
@@ -85,7 +78,7 @@ const ProfileScreen = ({
       email: PropTypes.string.isRequired,
       aptId: PropTypes.number.isRequired,
     }).isRequired,
-    error: PropTypes.string.isRequired,
+    error: PropTypes.string,
     navigation: PropTypes.shape({
       navigate: PropTypes.func.isRequired,
       replace: PropTypes.func.isRequired,
