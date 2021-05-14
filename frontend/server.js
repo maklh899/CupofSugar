@@ -9,8 +9,6 @@ const SERVER_ADDR = `https://wakena.onzasoft.com:${PORT}`;
 // const SERVER_ADDR = `http://10.0.0.232:${PORT}`;
 
 function authFetch(path, method = 'GET', body) {
-  // const { token } = AsyncStorage;
-  // const token = AsyncStorage.getItem('authToken');
   return new Promise((response, rejected) => {
     AsyncStorage.getItem('authToken')
       .then((token) => {

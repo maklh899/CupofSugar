@@ -90,8 +90,6 @@ export const signIn = (payload) => function signin(dispatch) {
   console.log('userActions SignIn payload:', payload);
   console.log(`URL: ${SERVER_ADDR}/users/signIn`);
   dispatch(signInRequest);
-
-  // axios.post(`${SERVER_ADDR}/users/signIn`, payload)
   fetch(
     `${SERVER_ADDR}/users/signIn`, {
       method: 'POST',
@@ -105,7 +103,6 @@ export const signIn = (payload) => function signin(dispatch) {
       }),
     },
   )
-    // .then((response) => response.json())
     .then((response) => {
       console.log('response');
       if (response.status < 300) {
@@ -143,6 +140,7 @@ const signOutRequest = () => ({
 
 const signOutSuccess = () => ({
   type: userConstants.SIGN_OUT_SUCCESS,
+  payload: {},
 });
 
 const signOutFailure = () => ({

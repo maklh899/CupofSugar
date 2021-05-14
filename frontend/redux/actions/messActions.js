@@ -19,14 +19,10 @@ const getChatroomsFailure = (error) => ({
 });
 
 export const getChatrooms = () => function getchatrooms(dispatch) {
-  // console.log('getChatrooms authFetch: ', authFetch('/chat/getUserRooms'));
-  // console.log(`URL: ${SERVER_ADDR}/chat/getUserRooms`);
   dispatch(getChatroomsRequest);
   authFetch('/chat/getUserRooms')
     .then((response) => {
-      // console.log('getUserRooms response: ', response);
       if (response.success) {
-        // console.log('getChatrooms action success: ', response.chatRoomswTime);
         dispatch(getChatroomsSuccess(response.chatRoomswTime));
       } else {
         console.log('getChatrooms action failure: ', response);

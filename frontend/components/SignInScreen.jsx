@@ -56,9 +56,7 @@ const mapDispatchToProps = (dispatch) => ({
 const Signin = ({
   login, navigation, storedUserName, isUserLoggedIn, error,
 }) => {
-  // const { error } = useSelector((state) => state.authentication);
   const [userName, setUserName] = useState('');
-  // const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [status, setStatus] = useState('...');
   console.log(signIn);
