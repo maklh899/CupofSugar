@@ -9,3 +9,10 @@ export {
   getMessages,
   newChatroom,
 } from './messActions';
+export {
+  makePayment,
+  getBalanceInfo,
+  getPaymentHist,
+  makeMaintReq,
+  getMaintReqs,
+} from './aptActions';

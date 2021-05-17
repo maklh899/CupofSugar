@@ -7,6 +7,7 @@ const initState = {
   balanceDue: 0,
   balancePaid: 0,
   payResponse: '',
+  paymentMonth: null,
 };
 
 const aptReducer = function aptRed(state = initState, action) {
@@ -110,6 +111,7 @@ const aptReducer = function aptRed(state = initState, action) {
       error: '',
       balanceDue: action.payload.balanceDue,
       balancePaid: action.payload.balancePaid,
+      paymentMonth: action.payload.paymentMonth,
     };
   }
   default:

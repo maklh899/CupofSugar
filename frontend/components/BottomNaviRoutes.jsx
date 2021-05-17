@@ -2,7 +2,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import BottomNavi from './UserBottomNavi';
 import HomeScreen from './HomeScreen';
 import ChatroomsScreen from './ChatroomListScreen';
 import ChatroomScreen from './ChatroomScreen';

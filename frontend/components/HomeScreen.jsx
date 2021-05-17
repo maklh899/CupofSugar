@@ -43,38 +43,38 @@ function HomeScreen(obj) {
 
     <Container style={styles.container}>
       <Content>
-      <Card style={styles.paycard}>
-        <CardItem header>
-          <Text>Current Payment Due</Text>
-        </CardItem>
-        <CardItem>
-          <Text>$1000</Text>
-        </CardItem>
-        <CardItem>
-          <Text>Bill due on March 01, 2021</Text>
-        </CardItem>
-        <CardItem>
-          <Button status="primary" style={styles.paybutton} onPress={() => navigation.navigate('Payment')}>
-            <Text>Pay Now</Text>
-          </Button>
-        </CardItem>
-        <CardItem Bottom>
-          <Button transparent>
-            <Text>See Ledger</Text>
-          </Button>
+        <Card style={styles.paycard}>
+          <CardItem header>
+            <Text>Current Payment Due</Text>
+          </CardItem>
+          <CardItem>
+            <Text>$1000</Text>
+          </CardItem>
+          <CardItem>
+            <Text>Bill due on March 01, 2021</Text>
+          </CardItem>
+          <CardItem>
+            <Button status="primary" style={styles.paybutton} onPress={() => navigation.navigate('Make Payment')}>
+              <Text>Pay Now</Text>
+            </Button>
+          </CardItem>
+          <CardItem Bottom>
+            <Button transparent style={styles.paybutton} onPress={() => navigation.navigate('Payment History')}>
+              <Text>See Payment History</Text>
+            </Button>
 
-        </CardItem>
-      </Card>
-      <Card style={styles.paycard}>
-        <CardItem header>
-          <Text>Maintence Request</Text>
-        </CardItem>
-        <CardItem>
-          <Button status="primary" style={styles.paybutton}>
-            <Text>Make a Request</Text>
-          </Button>
-        </CardItem>
-      </Card>
+          </CardItem>
+        </Card>
+        <Card style={styles.paycard}>
+          <CardItem header>
+            <Text>Maintence Request</Text>
+          </CardItem>
+          <CardItem>
+            <Button status="primary" style={styles.paybutton}>
+              <Text>Make a Request</Text>
+            </Button>
+          </CardItem>
+        </Card>
       </Content>
     </Container>
   );

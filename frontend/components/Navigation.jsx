@@ -12,6 +12,8 @@ import LoginScreen from './SignInScreen';
 import RegisterScreen from './SignUpScreen';
 import ChatroomScreen from './ChatroomScreen';
 import PaymentScreen from './PaymentScreen';
+import LedgerScreen from './LedgerScreen';
+import ProfileScreen from './ProfileScreen';
 import BottomNavi from './UserBottomNavi';
 import BottomNaviRoutes from './BottomNaviRoutes';
 
@@ -49,7 +51,7 @@ function getHeaderTitle(route) {
   // This can happen during if there hasn't been any navigation inside the screen
   // In our case, it's "Feed" as that's the first screen inside the navigator
   const routeName = getFocusedRouteNameFromRoute(route) ?? 'Home';
-
+  console.log('getHeaderTitle routeName: ', routeName);
   switch (routeName) {
   case 'Home':
     return 'Home';
@@ -63,6 +65,8 @@ function getHeaderTitle(route) {
     return 'My Profile';
   case 'Payment':
     return 'Make Payment';
+  case 'Ledger':
+    return 'Payment History';
   default:
   }
   return '';
@@ -88,13 +92,30 @@ const App = () => (
     <Stack.Screen
       name="Create Chatroom"
       component={CreateChatScreen}
-      options={({ route }) => ({
-        headerTitle: getHeaderTitle(route),
-      })}
+      option={{ title: 'Create Chatroom' }}
+      // options={({ route }) => ({
+      //   headerTitle: getHeaderTitle(route),
+      // })}
     />
     <Stack.Screen
-      name="Payment"
+      name="Make Payment"
       component={PaymentScreen}
+      option={{ title: 'Make Payment' }}
+      // options={({ route }) => ({
+      //   headerTitle: getHeaderTitle(route),
+      // })}
+    />
+    <Stack.Screen
+      name="Payment History"
+      component={LedgerScreen}
+      option={{ title: 'Payment History' }}
+      // options={({ route }) => ({
+      //   headerTitle: getHeaderTitle(route),
+      // })}
+    />
+    <Stack.Screen
+      name="Profile"
+      component={ProfileScreen}
       options={({ route }) => ({
         headerTitle: getHeaderTitle(route),
       })}

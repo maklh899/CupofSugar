@@ -117,6 +117,7 @@ async function aptBalance(payload) {
         return {
           balanceDue: apt.balanceDue,
           balancePaid: apt.balancePaid,
+          paymentMonth: apt.paymentMonth,
         };
       }
     });

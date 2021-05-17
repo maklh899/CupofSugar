@@ -61,7 +61,11 @@ const getBalanceInfoRequest = () => ({
 });
 const getBalanceInfoSuccess = (balance) => ({
   type: aptConstants.GET_BALANCE_INFO_SUCCESS,
-  payload: { balanceDue: balance.balanceDue, balancePaid: balance.balancePaid },
+  payload: {
+    balanceDue: balance.balanceDue,
+    balancePaid: balance.balancePaid,
+    paymentMonth: balance.paymentMonth,
+  },
 });
 const getBalanceInfoFailure = (error) => ({
   type: aptConstants.GET_BALANCE_INFO_FAILURE,
@@ -73,7 +77,7 @@ export const getBalanceInfo = () => function getbalanceinfo(dispatch) {
   authFetch('/apt/getAptBalance')
     .then((response) => {
       if (response.success) {
-        console.log('getBalanceInfo action balance: ', response.balance);
+        // console.log('getBalanceInfo action balance: ', response.balance);
         dispatch(getBalanceInfoSuccess(response.balance));
       } else {
         console.log('getBalanceInfo action failure: ', response);

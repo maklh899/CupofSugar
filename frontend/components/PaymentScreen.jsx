@@ -17,7 +17,7 @@ import {
   Card,
   Label,
 } from 'native-base';
-import { makePayment, getBalanceInfo } from '../redux/actions/aptActions';
+import { makePayment, getBalanceInfo } from '../redux/actions';
 
 const styles = StyleSheet.create({
   screenContainer: {
@@ -70,9 +70,9 @@ class paymentScreen extends Component {
     console.log('paymentScreen screen - fetching /apt/getbalance');
 
     // 1000ms = 1sec refresh
-    // const { getbalance } = this.props;
-    // setInterval(getbalance, 1000);
-    this.props.getbalance();
+    const { getbalance } = this.props;
+    setInterval(getbalance, 1000);
+    // this.props.getbalance();
   }
 
   handleAmountChange(event) {
