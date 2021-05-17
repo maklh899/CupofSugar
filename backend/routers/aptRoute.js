@@ -3,6 +3,9 @@ const aptControl = require('../controller/aptControl');
 
 // router.get('/getAptTenants', aptControl.getAptTenants);
 router.post('/createNewApt', aptControl.createNewApt);
+router.post('/makePayment', aptControl.makePayment);
+router.get('/getAptLedger', aptControl.getAptLedger);
+router.get('/getAptBalance', aptControl.getAptBalance);
 
 // export default router;
 module.exports = router;

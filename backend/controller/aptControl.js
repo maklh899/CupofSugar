@@ -1,8 +1,10 @@
 const jwt = require('jsonwebtoken');
 const key = require('../keys');
 
-const { createApt, addTenant } = require('../services/aptService');
-const { findUserByUsername, updateUserDoc } = require('../services/userService');
+const {
+  createApt, addTenant, addPayment, paymentHistory, aptBalance,
+} = require('../services/aptService');
+const { findUserByUsername, updateUserDoc, findUserByID } = require('../services/userService');
 
 const createNewApt = async (req, res) => {
   try {
@@ -74,9 +76,100 @@ const addTenantToApt = async (req, res) => {
   }
 };
 
+// body: amount
+const makePayment = async (req, res) => {
+  try {
+    console.log('---makePayment aptControl---');
+    // console.log('auth token: ', req.headers['x-auth-token']);
+    const token = req.headers['x-auth-token'];
+    const verToken = jwt.verify(token, key.JWT_SECRET);
+
+    if (verToken) {
+      console.log('makePayment req.body: ', req.body);
+
+      const currUser = await findUserByID(verToken['_id']);
+      const currName = `${currUser.firstName} ${currUser.lastName}`;
+      const payment = await addPayment({
+        payer: currName, amount: req.body.amount, apt: currUser.aptId,
+      });
+      console.log('makePayment payment: ', payment);
+
+      res.status(200).json({
+        success: true,
+        response: payment,
+      });
+    }
+  } catch (error) {
+    console.log('makePayment error: ', error.message);
+    res.status(200).json({
+      success: false,
+      mess: error.message,
+    });
+  }
+};
+
+const getAptLedger = async (req, res) => {
+  try {
+    console.log('---getAptLedger aptControl---');
+    // console.log('auth token: ', req.headers['x-auth-token']);
+    const token = req.headers['x-auth-token'];
+    const verToken = jwt.verify(token, key.JWT_SECRET);
+
+    if (verToken) {
+      const currUser = await findUserByID(verToken['_id']);
+      const history = await paymentHistory({
+        apt: currUser.aptId,
+      });
+      console.log('getAptLedger history: ', history);
+
+      res.status(200).json({
+        success: true,
+        history,
+      });
+    }
+  } catch (error) {
+    console.log('getAptLedger error: ', error.message);
+    res.status(500).json({
+      success: false,
+      mess: error.message,
+    });
+  }
+};
+
+const getAptBalance = async (req, res) => {
+  try {
+    console.log('---getAptBalance aptControl---');
+    // console.log('auth token: ', req.headers['x-auth-token']);
+    const token = req.headers['x-auth-token'];
+    const verToken = jwt.verify(token, key.JWT_SECRET);
+
+    if (verToken) {
+      const currUser = await findUserByID(verToken['_id']);
+      const balance = await aptBalance({
+        apt: currUser.aptId,
+      });
+      console.log('getAptBalance balance: ', balance);
+
+      res.status(200).json({
+        success: true,
+        balance,
+      });
+    }
+  } catch (error) {
+    console.log('getAptBalance error: ', error.message);
+    res.status(500).json({
+      success: false,
+      mess: error.message,
+    });
+  }
+};
+
 const aptControl = {
   createNewApt,
   addTenantToApt,
+  makePayment,
+  getAptLedger,
+  getAptBalance,
 };
 
 module.exports = aptControl;

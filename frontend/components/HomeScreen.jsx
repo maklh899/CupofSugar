@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, View } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import {
   Container,
   Header,
@@ -9,20 +9,74 @@ import {
   Right,
   Footer,
   FooterTab,
+  Button,
   Card,
   CardItem,
   Text,
 } from 'native-base';
-import userBottomNavi from './UserBottomNavi';
-import styles from './styles';
 
-function Home(obj) {
-  const { navigation } = obj;
+const styles = StyleSheet.create({
+  container: {
+    alignItems: 'center',
+    flex: 1,
+    // justifyContent: 'center',
+  },
+  authbutton: {
+    marginLeft: 'auto',
+    marginRight: 'auto',
+  },
+  paycard: {
+    marginTop: 20,
+    width: '95%',
+  },
+  paybutton: {
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+});
+
+function HomeScreen(obj) {
+  const { navigation, route } = obj;
   return (
-    <View style={styles.container}>
-      <Text>You made it🥳</Text>
-      <Button title="Go to messages" onPress={() => { navigation.navigate('Messages'); }} />
-    </View>
+
+    <Container style={styles.container}>
+      <Content>
+      <Card style={styles.paycard}>
+        <CardItem header>
+          <Text>Current Payment Due</Text>
+        </CardItem>
+        <CardItem>
+          <Text>$1000</Text>
+        </CardItem>
+        <CardItem>
+          <Text>Bill due on March 01, 2021</Text>
+        </CardItem>
+        <CardItem>
+          <Button status="primary" style={styles.paybutton} onPress={() => navigation.navigate('Payment')}>
+            <Text>Pay Now</Text>
+          </Button>
+        </CardItem>
+        <CardItem Bottom>
+          <Button transparent>
+            <Text>See Ledger</Text>
+          </Button>
+
+        </CardItem>
+      </Card>
+      <Card style={styles.paycard}>
+        <CardItem header>
+          <Text>Maintence Request</Text>
+        </CardItem>
+        <CardItem>
+          <Button status="primary" style={styles.paybutton}>
+            <Text>Make a Request</Text>
+          </Button>
+        </CardItem>
+      </Card>
+      </Content>
+    </Container>
   );
 }
-export default Home;
+export default HomeScreen;

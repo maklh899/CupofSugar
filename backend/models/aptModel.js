@@ -4,8 +4,21 @@ const mongoose = require('mongoose');
 mongoose.pluralize(null);
 const aptSchema = new mongoose.Schema({
   AptNumber: { type: Number, index: { unique: true } },
-  rentDue: Number,
-  rentPaid: Number,
+  balanceDue: Number,
+  balancePaid: Number,
+  rent: Number,
+  paymentMonth: { type: Date, default: Date.now },
+  paymentHistory: [{
+    payer: String,
+    payment: Number,
+    date: { type: Date, default: Date.now },
+  }],
+  mainRequest: [{
+    requestor: String,
+    body: Number,
+    status: String,
+    date: { type: Date, default: Date.now },
+  }],
   tenants: Array,
   documents: [{
     name: String,

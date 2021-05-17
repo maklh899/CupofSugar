@@ -11,6 +11,7 @@ import CreateChatScreen from './CreateChatScreen';
 import LoginScreen from './SignInScreen';
 import RegisterScreen from './SignUpScreen';
 import ChatroomScreen from './ChatroomScreen';
+import PaymentScreen from './PaymentScreen';
 import BottomNavi from './UserBottomNavi';
 import BottomNaviRoutes from './BottomNaviRoutes';
 
@@ -60,6 +61,8 @@ function getHeaderTitle(route) {
     return 'Create Chatroom';
   case 'Profile':
     return 'My Profile';
+  case 'Payment':
+    return 'Make Payment';
   default:
   }
   return '';
@@ -85,6 +88,13 @@ const App = () => (
     <Stack.Screen
       name="Create Chatroom"
       component={CreateChatScreen}
+      options={({ route }) => ({
+        headerTitle: getHeaderTitle(route),
+      })}
+    />
+    <Stack.Screen
+      name="Payment"
+      component={PaymentScreen}
       options={({ route }) => ({
         headerTitle: getHeaderTitle(route),
       })}

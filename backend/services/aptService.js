@@ -23,8 +23,9 @@ async function createApt(payload) {
   console.log('Apt stats: ', stats.length);
   const newApt = new Apt({
     AptNumber: stats.length + 1,
-    rentDue: payload.rent,
-    rentPaid: payload.rent,
+    balanceDue: payload.rent,
+    rent: payload.rent,
+    balancePaid: 0,
     tenants: payload.members,
 
   });
@@ -52,9 +53,75 @@ async function addTenant(payload) {
     );
 }
 
-module.exports = { getAptTenants, createApt, addTenant };
+async function addPayment(payload) {
+  console.log('aptService-addPayment payload:', payload);
+  if (Number.isNaN(parseInt(payload.amount, 10))) {
+    throw new Error('Input is not a number.');
+  }
+  if (parseInt(payload.amount, 10) <= 0) {
+    throw new Error('Input must be greater than 0.');
+  }
+  return Apt.findOne({ AptNumber: payload.apt })
+    .exec()
+    .then(
+      (apt) => {
+        let amountPaid = parseInt(apt.balancePaid, 10);
+        amountPaid += parseInt(payload.amount, 10);
 
-// {
-// 	"rent": 1720,
-// 	"members": ["dedny", "mak"]
-// }
+        let amountDue = parseInt(apt.balanceDue, 10);
+
+        let response = '';
+        if (amountDue < parseInt(payload.amount, 10)) {
+          const beforeDue = amountDue;
+          amountDue = parseInt(apt.rent, 10);
+          amountDue -= (parseInt(payload.amount, 10) - beforeDue);
+
+          response = `Balance paid off, there's ${amountDue} left for next month`;
+        } else {
+          amountDue -= parseInt(payload.amount, 10);
+          response = `There's $${amountDue} due for this month`;
+        }
+
+        apt.paymentHistory.push({ payer: payload.payer, payment: payload.amount });
+        return Apt.updateOne({ _id: apt['_id'] }, { balanceDue: amountDue, balancePaid: amountPaid, paymentHistory: apt.paymentHistory })
+          .exec()
+          .then(() => response);
+      },
+    );
+}
+
+// get apartment payment history by username
+async function paymentHistory(payload) {
+  console.log('aptService-paymentHistory payload:', payload);
+
+  return Apt.findOne({ AptNumber: payload.apt })
+    .exec()
+    .then((apt) => {
+      if (!apt) {
+        throw new Error(`Apartment ${payload} does not exist`);
+      } else {
+        return apt.paymentHistory;
+      }
+    });
+}
+
+async function aptBalance(payload) {
+  console.log('aptService-aptBalance payload:', payload);
+
+  return Apt.findOne({ AptNumber: payload.apt })
+    .exec()
+    .then((apt) => {
+      if (!apt) {
+        throw new Error(`Apartment ${payload} does not exist`);
+      } else {
+        return {
+          balanceDue: apt.balanceDue,
+          balancePaid: apt.balancePaid,
+        };
+      }
+    });
+}
+
+module.exports = {
+  getAptTenants, createApt, addTenant, addPayment, paymentHistory, aptBalance,
+};
