@@ -1,12 +1,6 @@
 import { messConstants } from '../constants';
 
 const initState = {
-  // currentUser: localStorage.getItem('USER-TOKEN')
-  //     ? isValidToken(localStorage.getItem('USER-TOKEN'))
-  //     : null,
-  // token: localStorage.getItem('USER-TOKEN')
-  //     ? localStorage.getItem('USER-TOKEN')
-  //     : null,
   chatRooms: [],
   loading: false,
   createdRoom: false,

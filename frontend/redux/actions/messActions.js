@@ -1,5 +1,3 @@
-import axios from 'axios';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { messConstants } from '../constants';
 
 const { SERVER_ADDR, authFetch } = require('../../server');
@@ -51,7 +49,6 @@ export const newChatroom = (payload) => function newchatroom(dispatch) {
   console.log(`URL: ${SERVER_ADDR}/chat/createChatRoom`);
   console.log('newChatroom action payload:', payload);
   dispatch(newChatroomRequest);
-  // getChatRooms(userToken)
   const body = JSON.stringify({ aptIds: payload.aptIds, usernames: payload.usernames });
   authFetch('/chat/createChatRoom', 'POST', body)
     .then((response) => {
@@ -86,7 +83,6 @@ const sendMessageFailure = (error) => ({
 export const sendMessage = (payload) => function sendmessage(dispatch) {
   console.log(`URL: ${SERVER_ADDR}/chat/${payload.roomId}/postMessage`);
   dispatch(sendMessageRequest);
-  // getChatRooms(userToken)
   const body = JSON.stringify({ message: payload.message });
   authFetch(`/chat/${payload.roomId}/postMessage`, 'POST', body)
     .then((response) => {
