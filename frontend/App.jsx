@@ -1,14 +1,16 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { StyleSheet, StatusBar } from 'react-native';
-import { Container } from 'native-base';
+import { Container, StyleProvider } from 'native-base';
 import configureStore from './redux/helpers/store';
 import { initializeApplication } from './redux/actions/appActions';
 
 import Navigation from './components/Navigation';
-//import Navigation from './routing';
-import UserBottomNavi from './components/UserBottomNavi';
-import { NavigationContainer } from '@react-navigation/native';
+import getTheme from './native-base-theme/components';
+import commonColor from './native-base-theme/variables/commonColor';
+import material from './native-base-theme/variables/material';
+import myThemeno from './native-base-theme/variables/colorsheet_var';
+import myTheme from './native-base-theme/variables/myTheme';
 
 // import { PrivateRoute } from './components/privateRouteComp';
 
@@ -19,10 +21,12 @@ store.dispatch(initializeApplication());
 function App() {
   return (
     <Provider store={store}>
-      <Container>
-        <Navigation />
-        <StatusBar style="auto"/>
-      </Container>
+      <StyleProvider style={getTheme(myTheme)}>
+        <Container>
+          <Navigation />
+          <StatusBar style="auto"/>
+        </Container>
+      </StyleProvider>
     </Provider>
   );
 }
