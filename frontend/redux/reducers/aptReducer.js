@@ -3,11 +3,12 @@ import { aptConstants } from '../constants';
 const initState = {
   loading: false,
   ledger: [],
+  aptMainReqs: [],
   error: '',
   balanceDue: 0,
   balancePaid: 0,
   payResponse: '',
-  paymentMonth: null,
+  paymentMonth: '',
 };
 
 const aptReducer = function aptRed(state = initState, action) {
@@ -101,7 +102,7 @@ const aptReducer = function aptRed(state = initState, action) {
       ...state,
       loading: false,
       error: '',
-      mainReq: action.payload,
+      aptMainReqs: action.payload,
     };
   case aptConstants.GET_BALANCE_INFO_SUCCESS:
   {

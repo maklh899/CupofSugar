@@ -89,8 +89,9 @@ export const getBalanceInfo = () => function getbalanceinfo(dispatch) {
 const makeMaintReqRequest = () => ({
   type: aptConstants.MAKE_MAINTENCE_REQ_REQUEST,
 });
-const makeMaintReqSuccess = () => ({
+const makeMaintReqSuccess = (requests) => ({
   type: aptConstants.MAKE_MAINTENCE_REQ_SUCCESS,
+  payload: requests,
 });
 const makeMaintReqFailure = (error) => ({
   type: aptConstants.MAKE_MAINTENCE_REQ_FAILURE,
@@ -100,11 +101,11 @@ const makeMaintReqFailure = (error) => ({
 export const makeMaintReq = (payload) => function makemaintreq(dispatch) {
   dispatch(makeMaintReqRequest);
   console.log('makeMaintReq action payload: ', payload);
-  const body = JSON.stringify({ requestor: payload.requestor, request: payload.request });
+  const body = JSON.stringify({ request: payload.request });
   authFetch('/apt/makeMaintReq', 'POST', body)
     .then((response) => {
       if (response.success) {
-        dispatch(makeMaintReqSuccess(response));
+        dispatch(makeMaintReqSuccess(response.requests));
       } else {
         console.log('makeMaintReq action failure: ', response);
         dispatch(makeMaintReqFailure(response.mess));
