@@ -138,8 +138,9 @@ const postMessage = async (req, res) => {
     const verToken = jwt.verify(token, key.JWT_SECRET);
 
     const currUser = await findUserByID(verToken['_id']);
+    const currName = `${currUser.firstName} ${currUser.lastName}`;
     const { roomId } = req.params;
-    const messBody = await createMessage(currUser.userName, roomId, req.body);
+    const messBody = await createMessage(currName, roomId, req.body);
 
     res.status(200).json({
       success: true,
