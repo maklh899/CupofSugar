@@ -35,20 +35,30 @@ async function createApt(payload) {
     tenants: payload.members,
 
   });
-  return newApt.save();
+  newApt.save();
+  return newApt;
 }
 
 async function addTenant(payload) {
   console.log('aptService-addTenant payload:', payload);
+  if (Number.isNaN(parseInt(payload.aot, 10))) {
+    throw new Error('Apartment # is not a number.');
+  }
   return Apt.findOne({ AptNumber: payload.apt })
     .exec()
     .then(
       (apt) => {
         if (!apt) {
-          const newApt = createApt({ members: [payload.user], rent: 1720 });
-          return User.updateOne({ _id: payload.userId }, { aptId: payload.apt })
-            .exec()
-            .then(() => newApt);
+          return createApt({ members: [payload.user], rent: 1720 })
+            .then((newApt) => {
+              console.log('aptService-addTenant newApt:', newApt);
+              return User.updateOne(
+                { _id: payload.userId }, { aptId: parseInt(newApt.AptNumber, 10) },
+              )
+                .exec()
+                .then(() => newApt);
+            })
+            .catch(() => console.log('aptService-addTenant error'));
         }
         apt.tenants.push(payload.user);
         return apt.save()
