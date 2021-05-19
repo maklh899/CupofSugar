@@ -40,7 +40,7 @@ class AppLoadingScreen extends Component {
     const { navigation, isUserLoggedIn } = this.props;
     setTimeout(() => {
       handleLoading(isUserLoggedIn, navigation);
-    }, 3000);
+    }, 5000);
   }
 
   render() {
