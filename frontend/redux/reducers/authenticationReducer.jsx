@@ -12,7 +12,9 @@ const initState = {
   // token: localStorage.getItem('USER-TOKEN')
   //     ? localStorage.getItem('USER-TOKEN')
   //     : null,
-  currentUser: null,
+  currentUser: {
+    firstName: '', lastName: '', userName: '', aptId: 0,
+  },
   token: null,
   signInErr: '',
   signUpErr: '',
