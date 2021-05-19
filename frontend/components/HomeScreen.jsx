@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
   },
   paycard: {
     marginTop: 20,
-    width: '95%',
+    width: '90%',
   },
   paybutton: {
     width: '100%',
@@ -68,7 +68,7 @@ class HomeScreen extends Component {
 
     return (
       <Container style={styles.container}>
-        <Content>
+        
           <Card style={styles.paycard}>
             <CardItem header>
               <Text>Current Payment Due:</Text>
@@ -106,7 +106,7 @@ class HomeScreen extends Component {
               </Button>
             </CardItem>
           </Card>
-        </Content>
+        
       </Container>
     );
   }

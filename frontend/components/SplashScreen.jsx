@@ -1,30 +1,57 @@
-import React from 'react';
-import { Text, View, TouchableWithoutFeedback } from 'react-native';
+import React, { Component } from 'react';
+import {
+  Text, View, StyleSheet, ActivityIndicator,
+} from 'react-native';
+import { Spinner } from 'native-base';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import styles from './styles';
 
-const handleClick = (isUserLoggedIn, navigation) => (
-  // isUserLoggedIn
-  //   ? navigation.navigate('Home')
-  //   : navigation.navigate('Login') // Login
+const styles = StyleSheet.create({
+  page: {
+    flex: 1,
+    backgroundColor: 'rgba(107,157,158,1)',
+    alignItems: 'center',
+    // justifyContent: 'center',
+  },
+  text: {
+    marginTop: '60%',
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 50,
+  },
+  spinner: {
+    marginTop: '50%',
+    color: '#fff',
+  },
+});
+
+const handleLoading = (isUserLoggedIn, navigation) => (
   navigation.replace(
     isUserLoggedIn ? 'App' : 'Auth',
   )
 );
-
-const AppLoadingScreen = ({ navigation, isUserLoggedIn, ...props }) => (
-  <TouchableWithoutFeedback onPress={() => handleClick(isUserLoggedIn, navigation)}>
-    <View style={styles.page}>
-      <Text>Touch Screen to start!</Text>
-    </View>
-  </TouchableWithoutFeedback>
-);
-
 // grabing from the current states
 const mapStateToProps = (state) => ({
   isUserLoggedIn: state.authentication.isAuthenticated,
 });
+
+class AppLoadingScreen extends Component {
+  componentDidMount() {
+    const { navigation, isUserLoggedIn } = this.props;
+    setTimeout(() => {
+      handleLoading(isUserLoggedIn, navigation);
+    }, 5000);
+  }
+
+  render() {
+    return (
+      <View style={styles.page}>
+        <Text style={styles.text}>Cup of Sugar</Text>
+        <ActivityIndicator style={styles.spinner} />
+      </View>
+    );
+  }
+}
 
 AppLoadingScreen.propTypes = {
   navigation: PropTypes.shape({

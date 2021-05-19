@@ -29,7 +29,16 @@ const Auth = () => (
     <Stack.Screen
       name="Login"
       component={LoginScreen}
-      options={{ headerShown: true }}
+      options={{
+        headerShown: true,
+        headerStyle: {
+          backgroundColor: 'rgba(107,157,158,1)', // Set Header color
+        },
+        headerTintColor: '#fff', // Set Header text color
+        headerTitleStyle: {
+          fontWeight: 'bold', // Set Header text style
+        },
+      }}
     />
     <Stack.Screen
       name="Register"
@@ -37,7 +46,7 @@ const Auth = () => (
       options={{
         title: 'Register', // Set Header Title
         headerStyle: {
-          backgroundColor: '#307ecc', // Set Header color
+          backgroundColor: 'rgba(107,157,158,1)', // Set Header color
         },
         headerTintColor: '#fff', // Set Header text color
         headerTitleStyle: {
@@ -81,6 +90,13 @@ const App = () => (
       component={BottomNaviRoutes}
       options={({ route }) => ({
         headerTitle: getHeaderTitle(route),
+        headerStyle: {
+          backgroundColor: 'rgba(107,157,158,1)', // Set Header color
+        },
+        headerTintColor: '#fff', // Set Header text color
+        headerTitleStyle: {
+          fontWeight: 'bold', // Set Header text style
+        },
       })}
     />
     <Stack.Screen
@@ -101,27 +117,72 @@ const App = () => (
     <Stack.Screen
       name="Create Chatroom"
       component={CreateChatScreen}
-      option={{ title: 'Create Chatroom' }}
+      option={{
+        title: 'Create Chatroom',
+        headerStyle: {
+          backgroundColor: 'rgba(107,157,158,1)', // Set Header color
+        },
+        headerTintColor: '#fff', // Set Header text color
+        headerTitleStyle: {
+          fontWeight: 'bold', // Set Header text style
+        },
+      }}
     />
     <Stack.Screen
       name="Make Payment"
       component={PaymentScreen}
-      option={{ title: 'Make Payment' }}
+      option={{
+        title: 'Make Payment',
+        headerStyle: {
+          backgroundColor: 'rgba(107,157,158,1)', // Set Header color
+        },
+        headerTintColor: '#fff', // Set Header text color
+        headerTitleStyle: {
+          fontWeight: 'bold', // Set Header text style
+        },
+      }}
     />
     <Stack.Screen
       name="Payment History"
       component={LedgerScreen}
-      option={{ title: 'Payment History' }}
+      option={{
+        title: 'Payment History',
+        headerStyle: {
+          backgroundColor: 'rgba(107,157,158,1)', // Set Header color
+        },
+        headerTintColor: '#fff', // Set Header text color
+        headerTitleStyle: {
+          fontWeight: 'bold', // Set Header text style
+        },
+      }}
     />
     <Stack.Screen
       name="Create Maintence Request"
       component={CreateMaintReqScreen}
-      option={{ title: 'Make Maintence Request' }}
+      option={{
+        title: 'Make Maintence Request',
+        headerStyle: {
+          backgroundColor: 'rgba(107,157,158,1)', // Set Header color
+        },
+        headerTintColor: '#fff', // Set Header text color
+        headerTitleStyle: {
+          fontWeight: 'bold', // Set Header text style
+        },
+      }}
     />
     <Stack.Screen
       name="Maintence Requests"
       component={MaintReqsScreen}
-      option={{ title: 'Maintence Requests' }}
+      option={{
+        title: 'Maintence Requests',
+        headerStyle: {
+          backgroundColor: 'rgba(107,157,158,1)', // Set Header color
+        },
+        headerTintColor: '#fff', // Set Header text color
+        headerTitleStyle: {
+          fontWeight: 'bold', // Set Header text style
+        },
+      }}
     />
   </Stack.Navigator>
 );
@@ -198,14 +259,15 @@ function Navigation(props) {
         <Stack.Screen
           name="App"
           component={App}
-          options={{ headerShown: false }}
+          options={{
+            headerShown: false,
+          }}
           // options={({ route }) => ({
           //   headerTitle: getHeaderTitle(route),
           // })}
         />
       </Stack.Navigator>
     </NavigationContainer>
-
 
   // <NavigationContainer
   //   ref={navigationRef}
