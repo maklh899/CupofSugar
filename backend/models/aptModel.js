@@ -7,7 +7,7 @@ const aptSchema = new mongoose.Schema({
   balanceDue: Number,
   balancePaid: Number,
   rent: Number,
-  paymentMonth: { type: Date, default: Date.now },
+  paymentMonth: Date,
   paymentHistory: [{
     payer: String,
     payment: Number,
@@ -15,7 +15,7 @@ const aptSchema = new mongoose.Schema({
   }],
   mainRequest: [{
     requestor: String,
-    body: Number,
+    body: String,
     status: String,
     date: { type: Date, default: Date.now },
   }],

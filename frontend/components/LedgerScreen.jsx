@@ -35,7 +35,6 @@ const LedgerScreen = ({
   navigation
 }) => {
   LedgerScreen.propTypes = {
-    error: PropTypes.string.isRequired,
     navigation: PropTypes.shape({
       navigate: PropTypes.func.isRequired,
     }).isRequired,

@@ -5,6 +5,7 @@ const User = require('../models/userModel');
 async function getAptTenants(payload) {
   console.log('aptService-getAptTenants payload:', payload);
   // console.log('Service- getAptTenants:', Apt);
+
   return Apt.findOne({ AptNumber: payload })
     .exec()
     .then((apt) => {
@@ -21,10 +22,15 @@ async function createApt(payload) {
   console.log('createApt() payload:', payload);
   const stats = await Apt.find();
   console.log('Apt stats: ', stats.length);
+
+  const today = new Date();
+  const paymentMonth = new Date(today.getFullYear(), today.getMonth() + 1, 1);
+
   const newApt = new Apt({
     AptNumber: stats.length + 1,
     balanceDue: payload.rent,
     rent: payload.rent,
+    paymentMonth,
     balancePaid: 0,
     tenants: payload.members,
 
@@ -71,19 +77,31 @@ async function addPayment(payload) {
         let amountDue = parseInt(apt.balanceDue, 10);
 
         let response = '';
+
+        const paymentMonth = new Date(apt.paymentMonth);
+        let newMonth = paymentMonth;
+
         if (amountDue < parseInt(payload.amount, 10)) {
           const beforeDue = amountDue;
           amountDue = parseInt(apt.rent, 10);
           amountDue -= (parseInt(payload.amount, 10) - beforeDue);
 
-          response = `Balance paid off, there's ${amountDue} left for next month`;
+          // increments to next Month
+          newMonth = new Date(paymentMonth.setMonth(paymentMonth.getMonth() + 1));
+
+          response = `This Month's balance is paid off, there's ${amountDue} left for next month`;
         } else {
           amountDue -= parseInt(payload.amount, 10);
           response = `There's $${amountDue} due for this month`;
         }
 
         apt.paymentHistory.push({ payer: payload.payer, payment: payload.amount });
-        return Apt.updateOne({ _id: apt['_id'] }, { balanceDue: amountDue, balancePaid: amountPaid, paymentHistory: apt.paymentHistory })
+        return Apt.updateOne({ _id: apt['_id'] }, {
+          balanceDue: amountDue,
+          balancePaid: amountPaid,
+          paymentMonth: newMonth,
+          paymentHistory: apt.paymentHistory,
+        })
           .exec()
           .then(() => response);
       },
@@ -123,6 +141,48 @@ async function aptBalance(payload) {
     });
 }
 
+// make a Maintence request
+// payload: apt, requestor, body
+async function addMaintReq(payload) {
+  console.log('aptService-addMaintReq payload:', payload);
+  return Apt.findOne({ AptNumber: payload.apt })
+    .exec()
+    .then(
+      (apt) => {
+        apt.mainRequest.push({
+          requestor: payload.requestor,
+          body: payload.body,
+          status: payload.status,
+        });
+        return Apt.updateOne({ _id: apt['_id'] }, { mainRequest: apt.mainRequest })
+          .exec()
+          .then(() => apt.mainRequest);
+      },
+    );
+}
+
+// get apartment maintence rewquests by username
+async function maintReqs(payload) {
+  console.log('aptService-maintReqs payload:', payload);
+
+  return Apt.findOne({ AptNumber: payload.apt })
+    .exec()
+    .then((apt) => {
+      if (!apt) {
+        throw new Error(`Apartment ${payload} does not exist`);
+      } else {
+        return apt.mainRequest;
+      }
+    });
+}
+
 module.exports = {
-  getAptTenants, createApt, addTenant, addPayment, paymentHistory, aptBalance,
+  getAptTenants,
+  createApt,
+  addTenant,
+  addPayment,
+  paymentHistory,
+  aptBalance,
+  addMaintReq,
+  maintReqs,
 };

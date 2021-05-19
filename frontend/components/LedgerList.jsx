@@ -37,7 +37,7 @@ function getReformatDate(date) {
 
 class LedgerList extends Component {
   componentDidMount() {
-    console.log('message screen - fetching /apt/getPaymentHist');
+    console.log('payment screen - fetching /apt/getPaymentHist');
 
     this.props.getHistory();
   }
