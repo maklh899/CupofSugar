@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const key = require('../keys');
 
 const {
-  createApt, addTenant, addPayment, paymentHistory, aptBalance,
+  createApt, addTenant, addPayment, paymentHistory, aptBalance, addMaintReq, maintReqs,
 } = require('../services/aptService');
 const { findUserByUsername, updateUserDoc, findUserByID } = require('../services/userService');
 
@@ -164,12 +164,72 @@ const getAptBalance = async (req, res) => {
   }
 };
 
+const makeMaintReq = async (req, res) => {
+  try {
+    console.log('---makeMaintReq aptControl---');
+    // console.log('auth token: ', req.headers['x-auth-token']);
+    const token = req.headers['x-auth-token'];
+    const verToken = jwt.verify(token, key.JWT_SECRET);
+
+    if (verToken) {
+      console.log('makeMaintReq req.body: ', req.body);
+
+      const currUser = await findUserByID(verToken['_id']);
+      const currName = `${currUser.firstName} ${currUser.lastName}`;
+      const mainReq = await addMaintReq({
+        requestor: currName, body: req.body.request, status: 'New', apt: currUser.aptId,
+      });
+      console.log('makeMaintReq mainReq: ', mainReq);
+
+      res.status(200).json({
+        success: true,
+      });
+    }
+  } catch (error) {
+    console.log('makeMaintReq error: ', error.message);
+    res.status(200).json({
+      success: false,
+      mess: error.message,
+    });
+  }
+};
+
+const getMaintReqs = async (req, res) => {
+  try {
+    console.log('---getMainReqs aptControl---');
+    // console.log('auth token: ', req.headers['x-auth-token']);
+    const token = req.headers['x-auth-token'];
+    const verToken = jwt.verify(token, key.JWT_SECRET);
+
+    if (verToken) {
+      const currUser = await findUserByID(verToken['_id']);
+      const requests = await maintReqs({
+        apt: currUser.aptId,
+      });
+      console.log('getMainReqs requests: ', requests);
+
+      res.status(200).json({
+        success: true,
+        requests,
+      });
+    }
+  } catch (error) {
+    console.log('getMainReqs error: ', error.message);
+    res.status(500).json({
+      success: false,
+      mess: error.message,
+    });
+  }
+};
+
 const aptControl = {
   createNewApt,
   addTenantToApt,
   makePayment,
   getAptLedger,
   getAptBalance,
+  makeMaintReq,
+  getMaintReqs,
 };
 
 module.exports = aptControl;

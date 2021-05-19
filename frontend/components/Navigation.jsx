@@ -14,6 +14,8 @@ import ChatroomScreen from './ChatroomScreen';
 import PaymentScreen from './PaymentScreen';
 import LedgerScreen from './LedgerScreen';
 import ProfileScreen from './ProfileScreen';
+import CreateMaintReqScreen from './CreateMaintReqScreen';
+import MaintReqsScreen from './MaintReqsScreen';
 import BottomNavi from './UserBottomNavi';
 import BottomNaviRoutes from './BottomNaviRoutes';
 
@@ -90,39 +92,39 @@ const App = () => (
       }}
     />
     <Stack.Screen
-      name="Create Chatroom"
-      component={CreateChatScreen}
-      option={{ title: 'Create Chatroom' }}
-      // options={({ route }) => ({
-      //   headerTitle: getHeaderTitle(route),
-      // })}
-    />
-    <Stack.Screen
-      name="Make Payment"
-      component={PaymentScreen}
-      option={{ title: 'Make Payment' }}
-      // options={({ route }) => ({
-      //   headerTitle: getHeaderTitle(route),
-      // })}
-    />
-    <Stack.Screen
-      name="Payment History"
-      component={LedgerScreen}
-      option={{ title: 'Payment History' }}
-      // options={({ route }) => ({
-      //   headerTitle: getHeaderTitle(route),
-      // })}
-    />
-    <Stack.Screen
       name="Profile"
       component={ProfileScreen}
       options={({ route }) => ({
         headerTitle: getHeaderTitle(route),
       })}
     />
+    <Stack.Screen
+      name="Create Chatroom"
+      component={CreateChatScreen}
+      option={{ title: 'Create Chatroom' }}
+    />
+    <Stack.Screen
+      name="Make Payment"
+      component={PaymentScreen}
+      option={{ title: 'Make Payment' }}
+    />
+    <Stack.Screen
+      name="Payment History"
+      component={LedgerScreen}
+      option={{ title: 'Payment History' }}
+    />
+    <Stack.Screen
+      name="Create Maintence Request"
+      component={CreateMaintReqScreen}
+      option={{ title: 'Make Maintence Request' }}
+    />
+    <Stack.Screen
+      name="Maintence Requests"
+      component={MaintReqsScreen}
+      option={{ title: 'Maintence Requests' }}
+    />
   </Stack.Navigator>
 );
-
 
 const mapStateToProps = (state) => ({
   isUserLoggedIn: state.authentication.isAuthenticated,
