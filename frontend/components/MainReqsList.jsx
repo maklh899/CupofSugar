@@ -33,7 +33,10 @@ class MainReqsList extends Component {
   componentDidMount() {
     console.log('mainReqs screen - fetching /apt/getMaintReqs');
 
-    this.props.getReqs();
+    // this.props.getReqs();
+    // 1000ms = 1sec refresh
+    const { getReqs } = this.props;
+    setInterval(getReqs, 1000);
   }
 
   render() {
