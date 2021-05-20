@@ -2,7 +2,7 @@
 import React, { Component }from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { View, StyleSheet } from 'react-native';
+import { Image, StyleSheet } from 'react-native';
 import {
   Container,
   Header,
@@ -18,6 +18,8 @@ import {
   Text,
 } from 'native-base';
 import { getBalanceInfo } from '../redux/actions';
+
+const cosLogo = require('./logo/cupOfSugar.png');
 
 const styles = StyleSheet.create({
   container: {
@@ -68,7 +70,7 @@ class HomeScreen extends Component {
 
     return (
       <Container style={styles.container}>
-        
+        <Image style={{ width: '100%', height: '20%' }} source={cosLogo} />
           <Card style={styles.paycard}>
             <CardItem header>
               <Text>Current Payment Due:</Text>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 // import styles from './styles';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Image } from 'react-native';
 import {
   Container,
   Header,
@@ -18,14 +18,12 @@ import {
 } from 'native-base';
 import { signIn } from '../redux/actions/userActions';
 
+const cosLogo = require('./logo/cupOfSugar.png');
+
 const styles = StyleSheet.create({
   screenContainer: {
     flex: 1,
     position: 'relative',
-  },
-  card: {
-    marginTop: 30,
-    width: '90%',
   },
   bottomView: {
     margin: 40,
@@ -99,6 +97,7 @@ const Signin = ({
   // onChangeText={(text) => { handleUsernameChange(text); console.log('input:', text); }}
   return (
     <Container style={styles.screenContainer}>
+      <Image style={{ width: '100%', height: '20%' }} source={cosLogo} />
       <Form>
         <Item floatingLabel>
           <Label>Username</Label>

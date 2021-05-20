@@ -1,17 +1,19 @@
 import React, { Component } from 'react';
 import {
-  Text, View, StyleSheet, ActivityIndicator,
+  Text, View, StyleSheet, ActivityIndicator, Image,
 } from 'react-native';
 import { Spinner } from 'native-base';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+const cosLogo = require('./logo/cupOfSugar.png');
+
 const styles = StyleSheet.create({
   page: {
     flex: 1,
-    backgroundColor: 'rgba(107,157,158,1)',
+    backgroundColor: 'rgba(228,240,208,1)',
     alignItems: 'center',
-    // justifyContent: 'center',
+    justifyContent: 'center',
   },
   text: {
     marginTop: '60%',
@@ -20,8 +22,9 @@ const styles = StyleSheet.create({
     fontSize: 50,
   },
   spinner: {
-    marginTop: '50%',
+    marginTop: '5%',
     color: '#fff',
+
   },
 });
 
@@ -46,8 +49,9 @@ class AppLoadingScreen extends Component {
   render() {
     return (
       <View style={styles.page}>
-        <Text style={styles.text}>Cup of Sugar</Text>
-        <ActivityIndicator style={styles.spinner} />
+        <Image style={{ width: '100%', height: '40%' }} source={cosLogo} />
+        {/* <Text style={styles.text}>Cup of Sugar</Text> */}
+        <Spinner style={styles.spinner} />
       </View>
     );
   }
