@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-one-expression-per-line */
-import React, { Component }from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Image, StyleSheet } from 'react-native';
@@ -71,44 +71,44 @@ class HomeScreen extends Component {
     return (
       <Container style={styles.container}>
         <Image style={{ width: '100%', height: '20%' }} source={cosLogo} />
-          <Card style={styles.paycard}>
-            <CardItem header>
-              <Text>Current Payment Due:</Text>
-            </CardItem>
-            <CardItem>
-              <Text>${balanceDue}</Text>
-            </CardItem>
-            <CardItem>
-              <Text>Bill due on {getReformatDate(paymentMonth)}</Text>
-            </CardItem>
-            <CardItem>
-              <Button status="primary" style={styles.paybutton} onPress={() => navigation.navigate('Make Payment')}>
-                <Text>Pay Now</Text>
-              </Button>
-            </CardItem>
-            <CardItem Bottom>
-              <Button transparent style={styles.paybutton} onPress={() => navigation.navigate('Payment History')}>
-                <Text>See Payment History</Text>
-              </Button>
+        <Card style={styles.paycard}>
+          <CardItem header>
+            <Text>Current Payment Due:</Text>
+          </CardItem>
+          <CardItem>
+            <Text>${balanceDue}</Text>
+          </CardItem>
+          <CardItem>
+            <Text>Bill due on {getReformatDate(paymentMonth)}</Text>
+          </CardItem>
+          <CardItem>
+            <Button status="primary" style={styles.paybutton} onPress={() => navigation.navigate('Make Payment')}>
+              <Text>Pay Now</Text>
+            </Button>
+          </CardItem>
+          <CardItem Bottom>
+            <Button transparent style={styles.paybutton} onPress={() => navigation.navigate('Payment History')}>
+              <Text>See Payment History</Text>
+            </Button>
 
-            </CardItem>
-          </Card>
-          <Card style={styles.paycard}>
-            <CardItem header>
-              <Text>Maintence Request</Text>
-            </CardItem>
-            <CardItem>
-              <Button style={styles.paybutton} onPress={() => navigation.navigate('Create Maintence Request')}>
-                <Text>Create a Request</Text>
-              </Button>
-            </CardItem>
-            <CardItem Bottom>
-              <Button transparent style={styles.paybutton} onPress={() => navigation.navigate('Maintence Requests')}>
-                <Text>See Maintence Requests</Text>
-              </Button>
-            </CardItem>
-          </Card>
-        
+          </CardItem>
+        </Card>
+        <Card style={styles.paycard}>
+          <CardItem header>
+            <Text>Maintence Request</Text>
+          </CardItem>
+          <CardItem>
+            <Button style={styles.paybutton} onPress={() => navigation.navigate('Create Maintence Request')}>
+              <Text>Create a Request</Text>
+            </Button>
+          </CardItem>
+          <CardItem Bottom>
+            <Button transparent style={styles.paybutton} onPress={() => navigation.navigate('Maintence Requests')}>
+              <Text>See Maintence Requests</Text>
+            </Button>
+          </CardItem>
+        </Card>
+
       </Container>
     );
   }
